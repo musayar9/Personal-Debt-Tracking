@@ -1,9 +1,8 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterSvg from "../assets/signUp.svg";
-
+import ErrorMessage from "../components/ErrorMessage";
 const Register: React.FC = () => {
- 
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -13,8 +12,9 @@ const Register: React.FC = () => {
     email: "",
     password: "",
   });
-const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const navigate = useNavigate();
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({
@@ -23,7 +23,7 @@ const [loading, setLoading] = useState<boolean>(false);
     });
   };
 
-  const handleSubmit = async(e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (
       formData.name === "" ||
@@ -33,8 +33,8 @@ const [loading, setLoading] = useState<boolean>(false);
       setErrorMessage("Please fill out all fields");
     }
     try {
-    setLoading(true)
-    setErrorMessage("")
+      setLoading(true);
+      setErrorMessage("");
       const res = await fetch("https://study.logiper.com/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,14 +42,34 @@ const [loading, setLoading] = useState<boolean>(false);
       });
 
       const data = await res.json();
-      console.log(data);
+
+      setLoading(false);
+      if (data.status === "error") {
+        setErrorMessage(data.data);
+      }
+      navigate("/login");
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+      });
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      setErrorMessage(error.message);
     }
   };
-  
-  console.log(errorMessage)
-console.log("loading", loading)
+
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+    }
+  }, [errorMessage]);
+
+  console.log(errorMessage);
+  console.log("loading", loading);
   return (
     <div className="mx-auto max-w-md p-2 my-8">
       <div className="flex items-center justify-center flex-col mt-5">
@@ -140,6 +160,8 @@ console.log("loading", loading)
           Login
         </Link>
       </div>
+
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </div>
   );
 };

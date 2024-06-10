@@ -1,22 +1,24 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import loginSvg from "../assets/login.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { login } from "../redux/userSlice";
+import ErrorMessage from "../components/ErrorMessage";
 const Login: React.FC = () => {
-
-
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     }
   );
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, error, userStatus } = useSelector(
+    (state: RootState) => state.user
+  );
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [errMessage, setErrMessage] = useState<string>("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({
@@ -24,10 +26,27 @@ const Login: React.FC = () => {
       [name]: value,
     });
   };
-const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-  e.preventDefault();
-  await dispatch(login(formData));
-};
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    await dispatch(login(formData));
+
+    navigate("/dashboard");
+
+    if (user?.status === "error") {
+      setErrMessage(user.data);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (errMessage) {
+      setTimeout(() => {
+        setErrMessage("");
+      }, 3000);
+    }
+  }, [errMessage]);
+  console.log("console.", error);
+  console.log("console.", userStatus);
   console.log("user", user);
   return (
     <div className="mx-auto max-w-md p-2 my-8 ">
@@ -37,7 +56,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           className="shadow-lg drop-shadow-lg h-40 w-40 bg-emerald-400 p-5 rounded-full"
           alt="login"
         />
-        <h1 className="text-3xl font-semibold my-8 text-slate-600">Sign In</h1>
+        <h1 className="text-3xl font-semibold my-8 text-slate-600">Login</h1>
       </div>
 
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
@@ -95,7 +114,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           type="submit"
           className="bg-emerald-600 text-white p-2 hover:translate-y-1 rounded-md shadow-md"
         >
-          <>Login</>
+          {userStatus === "loading" ? "Loading" : "Login"}
         </button>
       </form>
 
@@ -107,6 +126,8 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           </Link>
         </p>
       </div>
+
+      {errMessage && <ErrorMessage message={errMessage} />}
     </div>
   );
 };

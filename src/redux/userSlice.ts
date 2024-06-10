@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk("login", async (formData) => {
   try {
@@ -7,7 +7,7 @@ export const login = createAsyncThunk("login", async (formData) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
-    console.log(res);
+
     const data = await res.json();
     return data;
   } catch (error) {
@@ -17,20 +17,24 @@ export const login = createAsyncThunk("login", async (formData) => {
 
 interface UserState {
   user: object | null;
-  error: string |  null;
+  error: string | null;
   userStatus: string;
 }
 
 const initialState: UserState = {
   user: null,
-  error: null ,
+  error: null,
   userStatus: "idle",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    signOut: (state) => {
+      (state.user = null), (state.error = null), (state.userStatus = "idle");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.userStatus = "loading";
@@ -41,9 +45,10 @@ const userSlice = createSlice({
     });
 
     builder.addCase(login.rejected, (state, action) => {
-      (state.userStatus = "failed"), (state.user = action.error);
+      (state.userStatus = "failed"), (state.error = action.payload);
     });
   },
 });
 
+export const { signOut } = userSlice.actions;
 export default userSlice.reducer;
