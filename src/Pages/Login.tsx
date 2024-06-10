@@ -1,15 +1,21 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import loginSvg from "../assets/login.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { login } from "../redux/userSlice";
 const Login: React.FC = () => {
+
+
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     }
   );
-
+  const { user } = useSelector((state: RootState) => state.user);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -18,11 +24,11 @@ const Login: React.FC = () => {
       [name]: value,
     });
   };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    // Form submit logic goes here
-  };
+const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  e.preventDefault();
+  await dispatch(login(formData));
+};
+  console.log("user", user);
   return (
     <div className="mx-auto max-w-md p-2 my-8 ">
       <div className="flex items-center justify-center flex-col">
