@@ -74,9 +74,6 @@ const Debts: React.FC = () => {
 
   useEffect(() => {
     fetchDebt();
-  
-   
-    
   }, []);
 
   const handleDeletePost = async (): Promise<void> => {
@@ -123,7 +120,12 @@ const Debts: React.FC = () => {
             Personal Debt Tracking
           </h2>
           <div className=" flex items-center justify-between mt-4 mb-2 p-4">
-          <p  className="text-lg text-slate-400 font-bold">Total Debt : <span className="px-4 py-2 rounded-md text-white bg-emerald-400 text-md">{debtData?.data?.length}</span></p>
+            <p className="text-lg text-slate-400 font-bold">
+              Total Debt :{" "}
+              <span className="px-4 py-2 rounded-md text-white bg-emerald-400 text-md">
+                {debtData?.data?.length}
+              </span>
+            </p>
             <Link
               to="/dashboard?tab=debt/new_debt"
               className="px-4 py-2 bg-emerald-400 shadow-md capitalize text-white rounded-md"
@@ -190,7 +192,9 @@ const Debts: React.FC = () => {
                         </Table.Cell>
 
                         <Table.Cell>
-                          <span>Edit</span>
+                          <Link to={`/dashboard/edit/${item.id}`}>
+                            Edit
+                          </Link>
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>

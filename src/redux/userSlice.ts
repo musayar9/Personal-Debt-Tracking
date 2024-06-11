@@ -85,7 +85,7 @@ const userSlice = createSlice({
       (state.user = null), (state.error = null), (state.userStatus = "idle");
     },
     debtCount : (state, action)=>{
-      state.debtDataLength = action.payload.length
+      state.debtDataLength = action.payload
     }
   },
   extraReducers: (builder) => {

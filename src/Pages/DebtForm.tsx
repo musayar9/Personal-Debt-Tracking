@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-
+import { addMonths, format } from "date-fns";
 interface PaymentPlan {
   paymentDate: string;
   paymentAmount: number;
@@ -55,6 +55,13 @@ const navigate  = useNavigate()
       paymentPlan: updatedPaymentPlan,
     }));
   }, [formValues.debtAmount, formValues.interestRate, formValues.installment]);
+
+
+  const today = new Date();
+  // Bugünden 1 ay sonrasını hesapla
+  const nextMonth = addMonths(today, 1);
+  // Min değeri olarak 1 ay sonrasını kullan
+  const minDate = format(nextMonth, "yyyy-MM-dd");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -263,6 +270,7 @@ const navigate  = useNavigate()
           <div className="relative ">
             <input
               type="date"
+              min={minDate}
               id="paymentStart"
               className="block px-2.5 pb-2.5 pt-4 w-full md:w-52  text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
@@ -338,6 +346,7 @@ const navigate  = useNavigate()
               <div className="relative ">
                 <input
                   type="date"
+                  min={minDate}
                   id="paymentDate"
                   className="block px-2.5 pb-2.5 pt-4 w-full md:w-80 text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white

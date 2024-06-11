@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import PaymentPage from "./PaymentPage";
 import Debts from "./Debts";
 import DebtForm from "./DebtForm";
+import EditDebt from "./EditDebt";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -25,7 +26,8 @@ const Dashboard = () => {
       </div>
 
       {tab === "debt" && <Debts />}
-      {tab === "debt/new_debt" && <DebtForm/>}
+      {tab === "debt/new_debt" && <DebtForm />}
+
       {tab === "payment" && <PaymentPage />}
     </div>
   );

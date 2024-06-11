@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./Pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EditDebt from "./Pages/EditDebt";
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/edit/:id" element={<EditDebt />} />
       </Routes>
 
       <ToastContainer
