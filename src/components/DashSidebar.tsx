@@ -9,7 +9,9 @@ import { useState, useEffect } from "react";
 import { MdPayment } from "react-icons/md";
 import { FcDebt } from "react-icons/fc";
 const DashSidebar = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, debtDataLength,  } = useSelector(
+    (state: RootState) => state.user
+  );
   const location = useLocation();
   const [tab, setTab] = useState<string>("");
 
@@ -53,7 +55,7 @@ const DashSidebar = () => {
             <Sidebar.Item
               active={tab === "debt"}
               icon={FcDebt}
-              label={"Debt"}
+            
               as="div"
               labelColor="dark"
             >

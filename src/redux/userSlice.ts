@@ -18,8 +18,6 @@ export const login = createAsyncThunk("login", async (formData) => {
 export const createDebt = createAsyncThunk(
   "createDebt",
   async ({ formData, token }: { formData: FormValues; token: string }) => {
-    console.log("token", token);
-    console.log("formData", formData);
     try {
       const res = await fetch("https://study.logiper.com/finance/debt", {
         method: "POST",
@@ -30,10 +28,28 @@ export const createDebt = createAsyncThunk(
         body: JSON.stringify(formData),
       });
 
-   
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getDebt = createAsyncThunk(
+  "getDebt",
+  async ({ token }: { token: string }) => {
+    try {
+      const res = await fetch("https://study.logiper.com/finance/debt", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = await res.json();
-      console.log(data)
       return data;
     } catch (error) {
       return error;
@@ -47,6 +63,8 @@ interface UserState {
   userStatus: string;
   debtStatus: string;
   debt: object | null;
+  debtData: object | null;
+  debtDataLength: string;
 }
 
 const initialState: UserState = {
@@ -55,6 +73,8 @@ const initialState: UserState = {
   userStatus: "idle",
   debtStatus: "idle",
   debt: null,
+  debtDataLength: "",
+  debtData:null
 };
 
 const userSlice = createSlice({
@@ -64,6 +84,9 @@ const userSlice = createSlice({
     signOut: (state) => {
       (state.user = null), (state.error = null), (state.userStatus = "idle");
     },
+    debtCount : (state, action)=>{
+      state.debtDataLength = action.payload.length
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
@@ -90,8 +113,24 @@ const userSlice = createSlice({
     builder.addCase(createDebt.rejected, (state, action) => {
       (state.debtStatus = "failed"), (state.error = action.payload);
     });
+
+    // getdebt
+
+    builder.addCase(getDebt.pending, (state) => {
+      state.debtStatus = "loading";
+    });
+
+    builder.addCase(getDebt.fulfilled, (state, action) => {
+      state.debtStatus = "success";
+      state.debtData = action.payload;
+    });
+
+    builder.addCase(getDebt.rejected, (state, action) => {
+      state.debtStatus = "failed";
+      state.error = action.payload;
+    });
   },
 });
 
-export const { signOut } = userSlice.actions;
+export const { signOut, debtCount } = userSlice.actions;
 export default userSlice.reducer;
