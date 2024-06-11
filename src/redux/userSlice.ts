@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk("login", async (formData) => {
   try {
@@ -15,16 +15,46 @@ export const login = createAsyncThunk("login", async (formData) => {
   }
 });
 
+export const createDebt = createAsyncThunk(
+  "createDebt",
+  async ({ formData, token }: { formData: FormValues; token: string }) => {
+    console.log("token", token);
+    console.log("formData", formData);
+    try {
+      const res = await fetch("https://study.logiper.com/finance/debt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+   
+
+      const data = await res.json();
+      console.log(data)
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 interface UserState {
   user: object | null;
   error: string | null;
   userStatus: string;
+  debtStatus: string;
+  debt: object | null;
 }
 
 const initialState: UserState = {
   user: null,
   error: null,
   userStatus: "idle",
+  debtStatus: "idle",
+  debt: null,
 };
 
 const userSlice = createSlice({
@@ -46,6 +76,19 @@ const userSlice = createSlice({
 
     builder.addCase(login.rejected, (state, action) => {
       (state.userStatus = "failed"), (state.error = action.payload);
+    });
+
+    // create debt
+    builder.addCase(createDebt.pending, (state) => {
+      state.debtStatus = "loading";
+    });
+
+    builder.addCase(createDebt.fulfilled, (state, action) => {
+      (state.debtStatus = "success"), (state.debt = action.payload);
+    });
+
+    builder.addCase(createDebt.rejected, (state, action) => {
+      (state.debtStatus = "failed"), (state.error = action.payload);
     });
   },
 });
