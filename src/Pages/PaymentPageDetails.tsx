@@ -26,8 +26,8 @@ const PaymentPageDetail: React.FC<{id:string}> = ({id}) => {
       <h2 className="text-2xl font-bold text-slate-600 text-center my-12">
         {debtName} Details
       </h2>
-      <div className="border border-slate-100 rounded-md shadow-lg">
-        <div className="grid grid-cols-3   gap-4 p-4 ml-20 my-6">
+      <div className="border border-slate-100 rounded-md  m-2 shadow-lg ">
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3   gap-4 p-4 ml-20 my-6">
           <p className="text-slate-500 text-md font-bold">
             Debt Name :{" "}
             <span className="text-slate-700 text-md font-semibold">

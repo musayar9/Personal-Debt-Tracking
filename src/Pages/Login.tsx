@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     await dispatch(login(formData));
 
-    navigate("/dashboard");
+    navigate("/dashboard?tab=debt");
 
     if (user?.status === "error") {
       setErrMessage(user.data);

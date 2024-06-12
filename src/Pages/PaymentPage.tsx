@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { useEffect, useState } from "react";
-
+import ReturnButton from "../components/ReturnDebt";
 import PaymentPageDetail from "./PaymentPageDetails";
-import Loading from "../components/Loading"
-import {  Table } from "flowbite-react";
+import Loading from "../components/Loading";
+import { Table } from "flowbite-react";
 import { formatPrice } from "../components/Function";
 interface PaymentData {
   id: string;
@@ -21,10 +21,10 @@ const PaymentPage = () => {
   const { id } = useParams();
   const { user } = useSelector((state: RootState) => state.user);
   const [paymentData, setPaymentData] = useState<PaymentData[]>([]);
- const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const fetchPayment = async (): Promise<void> => {
     try {
-    setLoading(true)
+      setLoading(true);
       const res = await fetch(
         `https://study.logiper.com/finance/payment-plans/${id}`,
         {
@@ -37,9 +37,9 @@ const PaymentPage = () => {
       );
 
       const data = await res.json();
-     
+
       setPaymentData(data.data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -51,25 +51,21 @@ const PaymentPage = () => {
 
   console.log(paymentData, "paymentData");
 
-  const handleChange = async (id:string):Promise<void> => {
+  const handleChange = async (id: string): Promise<void> => {
+    const paymentIndex = paymentData.findIndex((item) => item.id === id);
+    if (paymentIndex === -1) return;
+    console.log("paymentInde", paymentIndex);
+    const paymentValue = paymentData[paymentIndex];
+    const updatedPayment = {
+      ...paymentValue,
+      isPaid: true,
+    };
 
-      const paymentIndex = paymentData.findIndex(
-        (item) => item.id === id
-      );
-      if (paymentIndex === -1) return;
-console.log("paymentInde", paymentIndex)
-      const paymentValue = paymentData[paymentIndex];
-      const updatedPayment = {
-        ...paymentValue,
-        isPaid: true,
-      };
-
-      const formData = {
-        paymentDate: updatedPayment.paymentDate,
-        paymentAmount: updatedPayment.paymentAmount,
-        isPaid: updatedPayment.isPaid,
-      };
-  
+    const formData = {
+      paymentDate: updatedPayment.paymentDate,
+      paymentAmount: updatedPayment.paymentAmount,
+      isPaid: updatedPayment.isPaid,
+    };
 
     try {
       const res = await fetch(
@@ -80,12 +76,12 @@ console.log("paymentInde", paymentIndex)
             "Content-type": "application/json",
             Authorization: `Bearer ${user.data}`,
           },
-          body:JSON.stringify(formData)
+          body: JSON.stringify(formData),
         }
       );
 
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       const newPaymentData = [...paymentData];
       newPaymentData[paymentIndex] = updatedPayment;
       setPaymentData(newPaymentData);
@@ -163,6 +159,8 @@ console.log("paymentInde", paymentIndex)
           </div>
         )}
       </>
+
+      <ReturnButton />
     </>
   );
 };

@@ -37,8 +37,8 @@ export const createDebt = createAsyncThunk(
   }
 );
 
-export const getDebt = createAsyncThunk(
-  "getDebt",
+export const fetchDebt = createAsyncThunk(
+  "getDebtData",
   async ({ token }: { token: string }) => {
     try {
       const res = await fetch("https://study.logiper.com/finance/debt", {
@@ -58,7 +58,7 @@ export const getDebt = createAsyncThunk(
 );
 
 export const getDebtId = createAsyncThunk(
-  "getDebt",
+  "getDebtId",
   async ({ token, debtId }: { token: string; debtId: string }) => {
     try {
       const res = await fetch(
@@ -141,19 +141,13 @@ const userSlice = createSlice({
 
     // getdebt
 
-    // builder.addCase(getDebt.pending, (state) => {
-    //   state.debtStatus = "loading";
-    // });
-
-    // builder.addCase(getDebt.fulfilled, (state, action) => {
-    //   state.debtStatus = "success";
-    //   state.debtData = action.payload;
-    // });
-
-    // builder.addCase(getDebt.rejected, (state, action) => {
-    //   state.debtStatus = "failed";
-    //   state.error = action.payload;
-    // });
+     builder.addCase(fetchDebt.pending, (state)=>{
+      state.debtStatus = "loading";
+     })
+     builder.addCase(fetchDebt.fulfilled, (state, action)=>{
+     state.debtData = action.payload;
+     state.debtStatus = "success"
+     })
 
     // getIdData
 

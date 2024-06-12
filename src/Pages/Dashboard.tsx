@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import DashSidebar from "../components/DashSidebar";
 import { useLocation } from "react-router-dom";
-import PaymentPage from "./PaymentPage";
+import DashboardArea  from "../components/DashboardArea"
 import Debts from "./Debts";
 import DebtForm from "./DebtForm";
-import EditDebt from "./EditDebt";
+
 
 const Dashboard = () => {
   const location = useLocation();
@@ -27,8 +27,8 @@ const Dashboard = () => {
 
       {tab === "debt" && <Debts />}
       {tab === "debt/new_debt" && <DebtForm />}
-     
-     
+
+      {tab === "dash" && <DashboardArea />}
     </div>
   );
 };

@@ -1,8 +1,8 @@
-import React from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "../redux/userSlice";
-import { persistor, RootState } from "../redux/store";
+
 const Navbar = () => {
   const { user, userStatus } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -31,18 +31,11 @@ const Navbar = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) => {
-              return isActive ? "text-teal-600  " : "text-[#334155] ";
-            }}
-          >
-            About
-          </NavLink>
+        
 
           {user && userStatus === "success" && (
             <NavLink
-              to="/dashboard"
+              to="/dashboard?tab=dash"
               className={({ isActive }) => {
                 return isActive ? "text-teal-600  " : "text-[#334155] ";
               }}
