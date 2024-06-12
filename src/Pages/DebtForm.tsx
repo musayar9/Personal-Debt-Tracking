@@ -72,11 +72,7 @@ const DebtForm: React.FC = () => {
     formValues.paymentStart,
   ]);
 
-  const today = new Date();
-  // Bugünden 1 ay sonrasını hesapla
-  const nextMonth = addMonths(today, 1);
-  // Min değeri olarak 1 ay sonrasını kullan
-  const minDate = format(nextMonth, "yyyy-MM-dd");
+
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -93,34 +89,7 @@ const DebtForm: React.FC = () => {
     });
   };
 
-  const handlePaymentPlanChange = (
-    index: number,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-    const updatedPaymentPlan = formValues.paymentPlan.map((plan, i) =>
-      i === index ? { ...plan, [name]: value } : plan
-    );
-    const updatedFormValues = {
-      ...formValues,
-      paymentPlan: updatedPaymentPlan,
-    };
 
-    const paymentAmount =
-      updatedFormValues.amount / updatedFormValues.installment;
-
-    const recalculatedPaymentPlan = updatedFormValues.paymentPlan.map(
-      (plan) => ({
-        ...plan,
-        paymentAmount,
-      })
-    );
-
-    setFormValues({
-      ...updatedFormValues,
-      paymentPlan: recalculatedPaymentPlan,
-    });
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -130,8 +99,7 @@ const DebtForm: React.FC = () => {
     }
   };
 
-  console.log("debt", debt);
-  console.log("user", user?.data);
+
   return (
     <div className="mx-auto max-w-2xl p-2 my-8">
       <h1 className="text-3xl font-bold text-center my-6 text-slate-600">
@@ -248,7 +216,7 @@ const DebtForm: React.FC = () => {
           <div className="relative ">
             <input
               type="date"
-              min={minDate}
+             
               id="paymentStart"
               className="block px-2.5 pb-2.5 pt-4 w-full md:w-52  text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
@@ -324,7 +292,7 @@ const DebtForm: React.FC = () => {
               <div className="relative ">
                 <input
                   type="date"
-                  min={minDate}
+               
                   id="paymentDate"
                   className="block px-2.5 pb-2.5 pt-4 w-full md:w-80 text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
@@ -332,7 +300,7 @@ const DebtForm: React.FC = () => {
                   placeholder="Payment Date"
                   name="paymentDate"
                   value={plan.paymentDate}
-                  onChange={(e) => handlePaymentPlanChange(index, e)}
+                
                 />
                 <label
                   htmlFor="paymentDate"
