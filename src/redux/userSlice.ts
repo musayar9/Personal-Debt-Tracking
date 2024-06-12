@@ -48,7 +48,7 @@ export const fetchDebt = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(res, "getDebtData");
       const data = await res.json();
       return data;
     } catch (error) {
@@ -88,7 +88,8 @@ interface UserState {
   debt: object | null;
   debtData: object | null;
   debtDataLength: string;
-  debtIdData: object;
+  debtIdData: object | null;
+
 }
 
 const initialState: UserState = {
@@ -100,6 +101,7 @@ const initialState: UserState = {
   debtDataLength: "",
   debtData: null,
   debtIdData: null,
+
 };
 
 const userSlice = createSlice({
@@ -141,14 +143,18 @@ const userSlice = createSlice({
 
     // getdebt
 
-     builder.addCase(fetchDebt.pending, (state)=>{
+    builder.addCase(fetchDebt.pending, (state) => {
       state.debtStatus = "loading";
-     })
-     builder.addCase(fetchDebt.fulfilled, (state, action)=>{
-     state.debtData = action.payload;
-     state.debtStatus = "success"
-     })
+    });
+    builder.addCase(fetchDebt.fulfilled, (state, action) => {
+      state.debtData = action.payload;
+      state.debtStatus = "success";
+    });
 
+    builder.addCase(fetchDebt.rejected, (state, action) => {
+      state.debtStatus = "failed";
+      state.error = action.error.message;
+    });
     // getIdData
 
     builder.addCase(getDebtId.pending, (state) => {
@@ -162,7 +168,7 @@ const userSlice = createSlice({
 
     builder.addCase(getDebtId.rejected, (state, action) => {
       state.debtStatus = "failed";
-      state.error = action.payload;
+      state.error = action.error.message;
     });
   },
 });

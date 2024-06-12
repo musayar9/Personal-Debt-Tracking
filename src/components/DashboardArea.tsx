@@ -18,7 +18,7 @@ const DashboardArea = () => {
   return (
     <>
       <div className="p-3 md:mx-auto my-8">
-        <div className="grid grid-cols-3 gap-4 justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
           <div className="flex flex-col p-3 gap-4 md:w-80 w-full rounded-md shadow-md">
             <div className="flex justify-between">
               <div className="">
@@ -41,7 +41,7 @@ const DashboardArea = () => {
             <>
               {debtData?.data?.slice(0, 5).map((item) => (
                 <div
-                  className="flex flex-col p-3 gap-4 md:w-80 w-full rounded-md shadow-md"
+                  className="flex flex-col p-3 gap-4 md:w-72  lg:w-80 w-full rounded-md shadow-md"
                   key={item.id}
                 >
                   <div className="flex justify-between">

@@ -34,14 +34,14 @@ const dispatch = useDispatch()
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
-    debtName: "",
-    lenderName: "",
-    debtAmount: 0,
-    interestRate: 0,
-    amount: 0,
-    paymentStart: "",
-    installment: 1,
-    description: "",
+    debtName: id ? debtIdData.data.debtName : "",
+    lenderName: id ? debtIdData.data.lenderName : "",
+    debtAmount: id ? debtIdData.data.debtAmount : "",
+    interestRate: id ? debtIdData.data.interestRate : "",
+    amount: id ? debtIdData.data.amount : "",
+    paymentStart: id ? debtIdData?.data.paymentStart : "",
+    installment: id ? debtIdData.data.installment : "",
+    description: id ? debtIdData.data.description : "",
     paymentPlan: [{ paymentDate: "", paymentAmount: 0 }],
   });
 

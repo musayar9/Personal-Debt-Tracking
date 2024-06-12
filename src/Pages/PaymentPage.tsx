@@ -19,12 +19,12 @@ interface PaymentData {
 }
 const PaymentPage = () => {
   const { id } = useParams();
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, debtStatus } = useSelector((state: RootState) => state.user);
   const [paymentData, setPaymentData] = useState<PaymentData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const fetchPayment = async (): Promise<void> => {
     try {
-      setLoading(true);
+      setLoading(true)
       const res = await fetch(
         `https://study.logiper.com/finance/payment-plans/${id}`,
         {
@@ -39,7 +39,7 @@ const PaymentPage = () => {
       const data = await res.json();
 
       setPaymentData(data.data);
-      setLoading(false);
+     setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -89,14 +89,17 @@ const PaymentPage = () => {
       console.log(err);
     }
   };
+  
+  if (debtStatus === "loading" && loading) return <Loading />;
 
   return (
     <>
+    
+   
+    
       <PaymentPageDetail id={id} />
-      <>
-        {loading ? (
-          <Loading />
-        ) : (
+      
+     
           <div
             className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar  max-w-6xl
     scrollbar-track-slate-100 scroll-bar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500"
@@ -157,8 +160,8 @@ const PaymentPage = () => {
               ))}
             </Table>
           </div>
-        )}
-      </>
+      
+      
 
       <ReturnButton />
     </>

@@ -22,6 +22,8 @@ const PaymentPageDetail: React.FC<{id:string}> = ({id}) => {
   } = debtIdData?.data;
 
   return (
+
+  
     <div className="max-w-6xl mx-auto my-8">
       <h2 className="text-2xl font-bold text-slate-600 text-center my-12">
         {debtName} Details
