@@ -39,17 +39,7 @@ const DashSidebar = () => {
             </Link>
           }
 
-          <Link to="/dashboard?tab=payment">
-            <Sidebar.Item
-              active={tab === "payment"}
-              icon={MdPayment}
-              label={"Payment"}
-              as="div"
-              labelColor="dark"
-            >
-              Payment
-            </Sidebar.Item>
-          </Link>
+         
 
           <Link to="/dashboard?tab=debt">
             <Sidebar.Item

@@ -38,8 +38,6 @@ const DebtForm: React.FC = () => {
     paymentPlan: [{ paymentDate: "", paymentAmount: 0 }],
   });
 
-  
-
   useEffect(() => {
     const debtAmount = parseFloat(formValues.debtAmount.toString()) || 0;
     const interestRate = parseFloat(formValues.interestRate.toString()) || 0;
@@ -49,7 +47,10 @@ const DebtForm: React.FC = () => {
     const installment = formValues.installment || 1;
     const paymentAmount = amount / installment;
     const paymentStartDate = parseISO(formValues.paymentStart);
-
+    setFormValues((prevState) => ({
+      ...prevState,
+      amount,
+    }));
     if (isValid(paymentStartDate)) {
       const updatedPaymentPlan = Array.from(
         { length: installment },
@@ -61,7 +62,6 @@ const DebtForm: React.FC = () => {
 
       setFormValues((prevState) => ({
         ...prevState,
-        amount,
         paymentPlan: updatedPaymentPlan,
       }));
     }

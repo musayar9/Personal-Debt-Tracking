@@ -27,8 +27,8 @@ const Dashboard = () => {
 
       {tab === "debt" && <Debts />}
       {tab === "debt/new_debt" && <DebtForm />}
-
-      {tab === "payment" && <PaymentPage />}
+     
+     
     </div>
   );
 };

@@ -423,7 +423,11 @@ export default DebtForm;
     const installment = formValues.installment || 1;
     const paymentAmount = amount / installment;
     const paymentStartDate = parseISO(formValues.paymentStart);
-
+setFormValues((prevState) => ({
+   ...prevState,
+   amount,
+   
+ }));
     if (isValid(paymentStartDate)) {
       const updatedPaymentPlan = Array.from(
         { length: installment },
@@ -435,7 +439,7 @@ export default DebtForm;
 
       setFormValues((prevState) => ({
         ...prevState,
-        amount,
+       
         paymentPlan: updatedPaymentPlan,
       }));
     }

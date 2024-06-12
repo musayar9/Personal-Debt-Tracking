@@ -57,6 +57,29 @@ export const getDebt = createAsyncThunk(
   }
 );
 
+export const getDebtId = createAsyncThunk(
+  "getDebt",
+  async ({ token, debtId }: { token: string; debtId: string }) => {
+    try {
+      const res = await fetch(
+        `https://study.logiper.com/finance/debt/${debtId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 interface UserState {
   user: object | null;
   error: string | null;
@@ -65,6 +88,7 @@ interface UserState {
   debt: object | null;
   debtData: object | null;
   debtDataLength: string;
+  debtIdData: object;
 }
 
 const initialState: UserState = {
@@ -74,7 +98,8 @@ const initialState: UserState = {
   debtStatus: "idle",
   debt: null,
   debtDataLength: "",
-  debtData:null
+  debtData: null,
+  debtIdData: null,
 };
 
 const userSlice = createSlice({
@@ -84,9 +109,9 @@ const userSlice = createSlice({
     signOut: (state) => {
       (state.user = null), (state.error = null), (state.userStatus = "idle");
     },
-    debtCount : (state, action)=>{
-      state.debtDataLength = action.payload
-    }
+    debtCount: (state, action) => {
+      state.debtDataLength = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
@@ -116,16 +141,32 @@ const userSlice = createSlice({
 
     // getdebt
 
-    builder.addCase(getDebt.pending, (state) => {
+    // builder.addCase(getDebt.pending, (state) => {
+    //   state.debtStatus = "loading";
+    // });
+
+    // builder.addCase(getDebt.fulfilled, (state, action) => {
+    //   state.debtStatus = "success";
+    //   state.debtData = action.payload;
+    // });
+
+    // builder.addCase(getDebt.rejected, (state, action) => {
+    //   state.debtStatus = "failed";
+    //   state.error = action.payload;
+    // });
+
+    // getIdData
+
+    builder.addCase(getDebtId.pending, (state) => {
       state.debtStatus = "loading";
     });
 
-    builder.addCase(getDebt.fulfilled, (state, action) => {
+    builder.addCase(getDebtId.fulfilled, (state, action) => {
       state.debtStatus = "success";
-      state.debtData = action.payload;
+      state.debtIdData = action.payload;
     });
 
-    builder.addCase(getDebt.rejected, (state, action) => {
+    builder.addCase(getDebtId.rejected, (state, action) => {
       state.debtStatus = "failed";
       state.error = action.payload;
     });

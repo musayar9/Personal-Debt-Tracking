@@ -7,22 +7,8 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { debtCount } from "../redux/userSlice";
 import Loading from "../components/Loading";
 import { toast } from "react-toastify";
+import { formatPercentage, formatPrice } from "../components/Function";
 
-export const formatPrice = (price) => {
-  const dollarsAmount = new Intl.NumberFormat("tr-TR", {
-    style: "currency",
-    currency: "TRY",
-  }).format((price / 100).toFixed(2));
-  return dollarsAmount;
-};
-export const formatPercentage = (percentage) => {
-  const formattedPercentage = new Intl.NumberFormat("tr-TR", {
-    style: "percent",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(percentage / 100);
-  return formattedPercentage;
-};
 
 interface Debt {
   id: number;
@@ -107,7 +93,7 @@ const Debts: React.FC = () => {
       console.log(error);
     }
   };
-
+console.log("debtData", debtData)
   return (
     <>
       {loading ? (
@@ -154,6 +140,9 @@ const Debts: React.FC = () => {
                     <Table.HeadCell>
                       <span>Edit</span>
                     </Table.HeadCell>
+                    <Table.HeadCell>
+                      <span>Payment Plan</span>
+                    </Table.HeadCell>
                   </Table.Head>
 
                   {debtData?.data.map((item) => (
@@ -192,8 +181,19 @@ const Debts: React.FC = () => {
                         </Table.Cell>
 
                         <Table.Cell>
-                          <Link to={`/dashboard/edit/${item.id}`}>
+                          <Link
+                            className="text-blue-500 font-medium hover:underline cursor-pointer"
+                            to={`/dashboard/edit/${item.id}`}
+                          >
                             Edit
+                          </Link>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Link
+                            className="text-emerald-500 font-medium hover:underline cursor-pointer"
+                            to={`/dashboard/payment/${item.id}`}
+                          >
+                            Pay Debt
                           </Link>
                         </Table.Cell>
                       </Table.Row>

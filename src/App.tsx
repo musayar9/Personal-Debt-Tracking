@@ -9,6 +9,7 @@ import Dashboard from "./Pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditDebt from "./Pages/EditDebt";
+import PaymentPage from "./Pages/PaymentPage";
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/edit/:id" element={<EditDebt />} />
+        <Route path ="/dashboard/payment/:id" element={<PaymentPage/>} />
       </Routes>
 
       <ToastContainer
