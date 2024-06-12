@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-import { addMonths, format } from "date-fns";
+import { addMonths, format, isValid, parseISO } from "date-fns";
 interface PaymentPlan {
   paymentDate: string;
   paymentAmount: number;
@@ -21,9 +21,11 @@ interface FormValues {
 }
 
 const DebtForm: React.FC = () => {
-  const { debt, user, debtStatus } = useSelector((state: RootState) => state.user);
+  const { debt, user, debtStatus } = useSelector(
+    (state: RootState) => state.user
+  );
   const dispatch = useDispatch();
-const navigate  = useNavigate()
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState<FormValues>({
     debtName: "",
     lenderName: "",
@@ -36,26 +38,39 @@ const navigate  = useNavigate()
     paymentPlan: [{ paymentDate: "", paymentAmount: 0 }],
   });
 
-  // Borç miktarı ve faiz oranı değiştiğinde toplam borç tutarını hesaplayın
+  
+
   useEffect(() => {
     const debtAmount = parseFloat(formValues.debtAmount.toString()) || 0;
     const interestRate = parseFloat(formValues.interestRate.toString()) || 0;
+
     const amount = debtAmount + debtAmount * (interestRate / 100);
+
     const installment = formValues.installment || 1;
     const paymentAmount = amount / installment;
+    const paymentStartDate = parseISO(formValues.paymentStart);
 
-    const updatedPaymentPlan = Array.from({ length: installment }, () => ({
-      paymentDate: "",
-      paymentAmount: paymentAmount,
-    }));
+    if (isValid(paymentStartDate)) {
+      const updatedPaymentPlan = Array.from(
+        { length: installment },
+        (_, i) => ({
+          paymentDate: format(addMonths(paymentStartDate, i), "yyyy-MM-dd"),
+          paymentAmount: parseFloat(paymentAmount.toFixed(2)),
+        })
+      );
 
-    setFormValues((prevState) => ({
-      ...prevState,
-      amount,
-      paymentPlan: updatedPaymentPlan,
-    }));
-  }, [formValues.debtAmount, formValues.interestRate, formValues.installment]);
-
+      setFormValues((prevState) => ({
+        ...prevState,
+        amount,
+        paymentPlan: updatedPaymentPlan,
+      }));
+    }
+  }, [
+    formValues.debtAmount,
+    formValues.interestRate,
+    formValues.installment,
+    formValues.paymentStart,
+  ]);
 
   const today = new Date();
   // Bugünden 1 ay sonrasını hesapla
@@ -107,48 +122,11 @@ const navigate  = useNavigate()
     });
   };
 
-  const addPaymentPlan = () => {
-    const newInstallment = formValues.installment + 1;
-    const paymentAmount = formValues.amount / newInstallment;
-
-    const updatedPaymentPlan = [
-      ...formValues.paymentPlan,
-      { paymentDate: "", paymentAmount: paymentAmount },
-    ].map((plan) => ({
-      ...plan,
-      paymentAmount,
-    }));
-
-    setFormValues({
-      ...formValues,
-      installment: newInstallment,
-      paymentPlan: updatedPaymentPlan,
-    });
-  };
-
-  const removePaymentPlan = (index: number) => {
-    const newInstallment = formValues.installment - 1;
-    const paymentAmount = formValues.amount / newInstallment;
-
-    const updatedPaymentPlan = formValues.paymentPlan
-      .filter((_, i) => i !== index)
-      .map((plan) => ({
-        ...plan,
-        paymentAmount,
-      }));
-
-    setFormValues({
-      ...formValues,
-      installment: newInstallment,
-      paymentPlan: updatedPaymentPlan,
-    });
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     await dispatch(createDebt({ formData: formValues, token: user?.data }));
-    if(debt && debtStatus === "success"){
-        navigate("/dashboard?tab=debt")
+    if (debt && debtStatus === "success") {
+      navigate("/dashboard?tab=debt");
     }
   };
 
@@ -385,15 +363,6 @@ const navigate  = useNavigate()
               </div>
             </div>
           ))}
-          <div className="  hidden">
-            <button
-              className="px-4 py-2 bg-amber-500 text-white rounded-md "
-              type="button"
-              onClick={addPaymentPlan}
-            >
-              add payment
-            </button>
-          </div>
         </div>
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded-md "
