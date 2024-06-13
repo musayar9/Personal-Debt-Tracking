@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import ReturnButton from "../components/ReturnDebt";
 import PaymentPageDetail from "./PaymentPageDetails";
 import Loading from "../components/Loading";
-import { Table } from "flowbite-react";
-import { formatPrice } from "../components/Function";
+
 import {PaymentData} from "../types/interfaces"
 import { Helmet } from "react-helmet";
 import PaymentTable from "./PaymentTable";

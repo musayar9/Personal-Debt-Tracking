@@ -11,10 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import EditDebt from "./Pages/EditDebt";
 import PaymentPage from "./Pages/PaymentPage";
 import PageNotFound from "./Pages/PageNotFound";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 const App = () => {
   return (
     <>
       <Navbar />
+     
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
