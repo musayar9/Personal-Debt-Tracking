@@ -88,9 +88,11 @@ return      <div className="max-w-2xl mx-auto">
       {debtData?.data?.length > 0 ? (
         <div className="mx-auto max-w-6xl my-8">
           <div>
-            <h2 className="text-3xl font-bold text-slate-500 text-center">
-              Personal Debt Tracking
-            </h2>
+            <div className="border-b border-base-300 pb-5">
+              <h2 className="text-3xl font-medium tracking-wider capitalize text-slate-500">
+                Personal Debt Tracking
+              </h2>
+            </div>
             <div className=" flex items-center justify-between mt-4 mb-2 p-4">
               <p className="text-lg text-slate-400 font-bold">
                 Total Debt :{" "}

@@ -13,60 +13,51 @@ const PaymentPageDetail: React.FC<{id:string}> = ({id}) => {
 
 
   return (
-    <div className="max-w-6xl mx-auto my-8">
-      <h2 className="text-2xl font-bold text-slate-600 text-center my-12">
-        {debtIdData?.data.debtName} Details
-      </h2>
-      <div className="border border-slate-100 rounded-md  m-2 shadow-lg ">
-        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3   gap-4 p-4 ml-20 my-6">
-          <p className="text-slate-500 text-md font-bold">
-            Debt Name :{" "}
-            <span className="text-slate-700 text-md font-semibold">
-              {debtIdData?.data.debtName}
-            </span>
+    <div className="">
+      <div className="border border-slate-100 rounded-md  m-2 shadow-lg  bg-[#f2f7ff]">
+        <div className="grid grid-cols-1  gap-4 p-4  ">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
+            <span>Debt Name</span>
+            <span className="font-medium">{debtIdData?.data.debtName}</span>
           </p>
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Lender Name :{" "}
-            <span className="text-slate-700 text-md font-semibold">
-              {debtIdData?.data.lenderName}
-            </span>
+            <span className="font-medium">{debtIdData?.data.lenderName}</span>
           </p>
 
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Payment Start :{" "}
-            <span className="text-slate-700 text-md font-semibold">
+            <span className="font-medium">
               {new Date(debtIdData?.data.paymentStart).toLocaleDateString()}
             </span>
           </p>
 
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Debt Amount:{" "}
-            <span className="text-slate-700 text-md font-semibold">
+            <span className="font-medium">
               {formatPrice(debtIdData?.data.debtAmount)}
             </span>
           </p>
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             InterestRate :{" "}
-            <span className="text-slate-700 text-md font-semibold">
+            <span className="font-medium">
               {formatPercentage(debtIdData?.data.interestRate)}
             </span>
           </p>
 
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Amount :{" "}
-            <span className="text-slate-700 text-md font-semibold">
+            <span className="font-medium">
               {formatPrice(debtIdData?.data.amount)}
             </span>
           </p>
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Installment :{" "}
-            <span className="text-slate-700 text-md font-semibold">
-              {debtIdData?.data.installment}
-            </span>
+            <span className="font-medium">{debtIdData?.data.installment}</span>
           </p>
-          <p className="text-slate-500 text-md font-bold">
+          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
             Description :{" "}
-            <span className="text-slate-700 text-md font-semibold">
+            <span className="font-medium">
               {debtIdData?.data.description}
             </span>
           </p>

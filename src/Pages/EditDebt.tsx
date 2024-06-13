@@ -3,17 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { formatPercentage, formatPrice } from "../components/Function";
-import { addMonths, format, isValid, parseISO } from "date-fns";
+import { addMonths, format, isValid, parseISO, isToday } from "date-fns";
 import { getDebtId } from "../redux/userSlice";
-import {FormValues} from "../types/FormValues"
+import { FormValues } from "../types/interfaces";
 import ReturnDebt from "../components/ReturnDebt";
 import ErrorMessage from "../components/ErrorMessage";
-
+import { Helmet } from "react-helmet";
 
 const EditDebt: React.FC = () => {
-  const {  user, debtIdData } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { user, debtIdData } = useSelector((state: RootState) => state.user);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -23,20 +21,20 @@ const EditDebt: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
-    debtName: id ? debtIdData.data.debtName : "",
-    lenderName: id ? debtIdData.data.lenderName : "",
-    debtAmount: id ? debtIdData.data.debtAmount : "",
-    interestRate: id ? debtIdData.data.interestRate : "",
-    amount: id ? debtIdData.data.amount : "",
+    debtName: id ? debtIdData?.data.debtName : "",
+    lenderName: id ? debtIdData?.data.lenderName : "",
+    debtAmount: id ? debtIdData?.data.debtAmount : "",
+    interestRate: id ? debtIdData?.data.interestRate : "",
+    amount: id ? debtIdData?.data.amount : "",
     paymentStart: id ? debtIdData?.data.paymentStart : "",
-    installment: id ? debtIdData.data.installment : "",
-    description: id ? debtIdData.data.description : "",
+    installment: id ? debtIdData?.data.installment : "",
+    description: id ? debtIdData?.data.description : "",
     paymentPlan: [{ paymentDate: "", paymentAmount: 0 }],
   });
 
   useEffect(() => {
     if (id) {
-      dispatch(getDebtId({ debtId: id, token: user.data }));
+      dispatch(getDebtId({ debtId: id, token: user?.data }));
     }
 
     const debtAmount = parseFloat(formValues.debtAmount.toString()) || 0;
@@ -115,7 +113,7 @@ const EditDebt: React.FC = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.data}`,
+          Authorization: `Bearer ${user?.data}`,
         },
         body: JSON.stringify(formValues),
       });
@@ -135,9 +133,11 @@ const EditDebt: React.FC = () => {
         <meta name="description" content="Home" />
       </Helmet>
       <div className="mx-auto max-w-2xl p-2 my-8">
-        <h1 className="text-3xl font-bold text-center my-6 text-slate-600">
-          Edit Debt
-        </h1>
+        <div className="border-b border-base-300 pb-5">
+          <h2 className="text-3xl font-medium tracking-wider capitalize text-slate-500">
+            Edit Debt
+          </h2>
+        </div>
         <div className="flex justify-end my-3">
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -284,7 +284,7 @@ const EditDebt: React.FC = () => {
                   placeholder="amount "
                   name="amount"
                   value={formValues.amount}
-                  readOnly
+            readOnly
                 />
                 <label
                   htmlFor="amount"
@@ -311,6 +311,9 @@ const EditDebt: React.FC = () => {
                   name="paymentStart"
                   value={formValues.paymentStart}
                   onChange={handleChange}
+                  min={
+                    isToday(new Date()) ? format(new Date(), "yyyy-MM-dd") : ""
+                  }
                   required
                 />
                 <label
@@ -408,6 +411,11 @@ const EditDebt: React.FC = () => {
                     placeholder="Payment Date"
                     name="paymentDate"
                     value={plan.paymentDate}
+                    min={
+                      isToday(new Date())
+                        ? format(new Date(), "yyyy-MM-dd")
+                        : ""
+                    }
                   />
                   <label
                     htmlFor="paymentDate"
