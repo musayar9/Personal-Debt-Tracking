@@ -104,3 +104,25 @@ Uygulamaya ilk defa giriş yapan kullanıcın hiç bir borç kaydı bulunmadığ
 Bu sayfada kullanıcı toplam  borç sayını görüntüleyebilir. Güncel olan borçlarını görebilir.
 
 ![img-5](public/images/5.jpg)
+
+### Oluşturulan Borçların Borç(Debt) Sayfasında Gösterilmesi
+
+Bu sayfada kullanıcı oluşturmuş olduğu tüm borçları tabloda görüntüleyebilir. Bu tabloda borca ait detaylı bilgiler bulunmaktadır.
+Kullanıcı bu istediğini borcunu silebilir, düzenleyebilir ve borcunun ödeme işlemlerini yapabilir.
+
+
+![img-7](public/images/7.jpg)
+
+   #### Borç Düzenleme
+   
+   Kullanıcı tabloda ``edit`` butonuna tıkladığında iligili borc için borç düzenleme sayfasına yönlendirilecek.
+   
+   ![img-8](public/images/8.jpg)
+   
+   #### Borç Ödeme
+   
+   Kullanıcı tabloda `pay debt` butonuna tıkladığında ilgili borca ait olan borç bilgilerinin ve ödeme planını bulunduğu sayfaya yönlendirilecek. Kullanıcı bu sayfada ilgili borca ait olan taksit ödemlerini bu sayfadan yapabilir.
+   
+   ![img-9](public/images/9.jpg)
+
+
