@@ -9,7 +9,7 @@ import Loading from "../components/Loading";
 import { toast } from "react-toastify";
 import { formatPercentage, formatPrice } from "../components/Function";
 import {Debt} from "../types/interfaces"
-
+import { Helmet } from "react-helmet";
 
 const Debts: React.FC = () => {
   const { user} = useSelector(
@@ -80,6 +80,11 @@ return      <div className="max-w-2xl mx-auto">
 }
   return (
     <>
+      <Helmet>
+        <title>Debts</title>
+        <meta name="description" content="Debts" />
+      </Helmet>
+
       {debtData?.data?.length > 0 ? (
         <div className="mx-auto max-w-6xl my-8">
           <div>
