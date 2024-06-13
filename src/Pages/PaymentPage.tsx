@@ -17,7 +17,8 @@ const PaymentPage = () => {
   );
   const [paymentData, setPaymentData] = useState<PaymentData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errMessage, ] = useState<string>("")
+  
+  const [errMessage, setErrMessage] = useState<string>("")
   const fetchPayment = async (): Promise<void> => {
     try {
       setLoading(true)
