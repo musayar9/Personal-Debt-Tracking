@@ -1,5 +1,9 @@
 ## Kişisel Borç Takip Uygulaması
 
+
+https://github.com/musayar9/Personal-Debt-Tracking/assets/96313325/6eb175cb-8d6d-42d1-b80f-b30a88cbace5
+
+
 ### Kullanılan Teknolojiler
 
 ![react](https://img.shields.io/badge/react-18.2.0-lightblue)
