@@ -70,8 +70,7 @@ const Register: React.FC = () => {
     }
   }, [errorMessage]);
 
-  console.log(errorMessage);
-  console.log("loading", loading);
+
   return (
     <>
       <Helmet>
@@ -86,7 +85,7 @@ const Register: React.FC = () => {
             alt="login"
           />
           <h1 className="text-3xl font-semibold text-slate-600 my-8">
-            Sign Up
+            Register
           </h1>
         </div>
 
@@ -156,7 +155,7 @@ const Register: React.FC = () => {
           </div>
 
           <button className="bg-emerald-600 rounded-md p-2 text-white hover:bg-emerald-700 hover:translate-y-1 duration-150 ease-in">
-            <>Sign Up</>
+            <> {loading ? "Register..." : "Register"} </>
           </button>
         </form>
 
@@ -166,7 +165,7 @@ const Register: React.FC = () => {
             to="/login"
             className="text-blue-600 underline hover:text-blue-700"
           >
-           {loading ? "Register...": "Register"} Login
+            Login
           </Link>
         </div>
 

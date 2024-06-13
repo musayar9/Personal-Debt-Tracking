@@ -73,3 +73,9 @@ or
 yarn run dev
 ```
 
+## Proje Sayfaları
+
+### Kullanıcı Kayıt Sayfası
+
+![img-1](public/images/1.jpg)
+
