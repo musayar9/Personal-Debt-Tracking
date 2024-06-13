@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { addMonths, format, isValid, parseISO, isToday } from "date-fns";
 import ErrorMessage from "../components/ErrorMessage";
 import { FormValues } from "../types/interfaces"
-
+import { Helmet } from "react-helmet";
 
 const DebtForm: React.FC = () => {
   const {  user, debtStatus } = useSelector(
@@ -110,6 +110,13 @@ const DebtForm: React.FC = () => {
 
 
   return (
+  <>
+      <Helmet>
+        <title>Created Debt</title>
+        <meta name="description" content="Created Debt" />
+      </Helmet>
+
+  
     <div className="mx-auto max-w-2xl p-2 my-8">
       <h1 className="text-3xl font-bold text-center my-6 text-slate-600">
         Created Debt
@@ -353,6 +360,8 @@ const DebtForm: React.FC = () => {
 
       {errMessage && <ErrorMessage message={errMessage} />}
     </div>
+  </>
+  
   );
 };
 

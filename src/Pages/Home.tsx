@@ -14,7 +14,7 @@ const Home = () => {
           <h1 className="text-2xl font-bold text-slate-700">
             Personal Debt Tracking Application
           </h1>
-          <p className="text-xl font-semibold tracking-widest text-slate-500">
+          <p className="text-xl font-semibold  tracking-widest text-slate-500">
             Wherever you are, whether on your tablet, phone, or computer, manage
             your debts with the PDT App! Create your digital wallet, easily
             track your debts, and schedule installments as needed. Plus, at the
