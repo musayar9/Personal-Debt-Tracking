@@ -5,24 +5,13 @@ import { RootState } from "../redux/store";
 import { formatPercentage, formatPrice } from "../components/Function";
 import { addMonths, format, isValid, parseISO } from "date-fns";
 import { getDebtId } from "../redux/userSlice";
-interface PaymentPlan {
-  paymentDate: string;
-  paymentAmount: number;
-}
-interface FormValues {
-  debtName: string;
-  lenderName: string;
-  debtAmount: number;
-  interestRate: number;
-  amount: number;
-  paymentStart: string;
-  installment: number;
-  description: string;
-  paymentPlan: PaymentPlan[];
-}
+import {FormValues} from "../types/FormValues"
+import ReturnDebt from "../components/ReturnDebt";
+import ErrorMessage from "../components/ErrorMessage";
+
 
 const EditDebt: React.FC = () => {
-  const { debt, user, debtIdData } = useSelector(
+  const {  user, debtIdData } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -384,7 +373,7 @@ const EditDebt: React.FC = () => {
                 Description
               </label>
             </div>
-            {show && debtIdData?.data?.description !== "" && (
+            {show && (
               <p className="bg-emerald-500 text-white px-4 py-2 rounded-md my-2 text-xs ">
                 {debtIdData?.data?.description}
               </p>
@@ -449,7 +438,7 @@ const EditDebt: React.FC = () => {
           {loading ? "Editing Debt...." : "Edit Debt"}
         </button>
       </form>
-
+<ReturnDebt/>
       {errMessage && <ErrorMessage message={errMessage} />}
     </div>
   );

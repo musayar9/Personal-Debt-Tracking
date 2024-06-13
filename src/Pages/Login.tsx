@@ -133,7 +133,7 @@ const Login: React.FC = () => {
           type="submit"
           className="bg-emerald-600 text-white p-2 hover:translate-y-1 rounded-md shadow-md"
         >
-          {loading ? "Loading" : "Login"}
+          {loading ? "Login" : "Loading"}
         </button>
       </form>
 

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import Error from "./Error";
 
-const DashboardArea = () => {
+const DashboardArea:React.FC = () => {
   const { user, debtData, debtStatus, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 

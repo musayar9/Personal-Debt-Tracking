@@ -1,14 +1,13 @@
 import { Sidebar } from "flowbite-react";
 import { RootState } from "../redux/store";
-
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { useState, useEffect } from "react";
-
-
 import { FcDebt } from "react-icons/fc";
-const DashSidebar = () => {
+
+
+const DashSidebar:React.FC = () => {
   const { user,  } = useSelector(
     (state: RootState) => state.user
   );

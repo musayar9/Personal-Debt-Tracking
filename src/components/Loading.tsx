@@ -1,5 +1,5 @@
 import { ColorRing } from "react-loader-spinner";
-const Loading = () => {
+const Loading:React.FC = () => {
   return (
     <div className="flex items-center justify-center h-screen z-10">
       <ColorRing

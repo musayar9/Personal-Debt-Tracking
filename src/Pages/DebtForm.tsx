@@ -5,21 +5,8 @@ import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { addMonths, format, isValid, parseISO } from "date-fns";
 import ErrorMessage from "../components/ErrorMessage";
-interface PaymentPlan {
-  paymentDate: string;
-  paymentAmount: number;
-}
-interface FormValues {
-  debtName: string;
-  lenderName: string;
-  debtAmount: number;
-  interestRate: number;
-  amount: number;
-  paymentStart: string;
-  installment: number;
-  description: string;
-  paymentPlan: PaymentPlan[];
-}
+import { FormValues } from "../types/interfaces"
+
 
 const DebtForm: React.FC = () => {
   const {  user, debtStatus } = useSelector(

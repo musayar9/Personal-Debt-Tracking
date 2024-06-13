@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "../redux/userSlice";
 import { RootState } from "../redux/store";
 
-const Navbar = () => {
+const Navbar:React.FC = () => {
   const { user,  } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();

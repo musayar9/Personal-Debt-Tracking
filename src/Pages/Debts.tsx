@@ -8,24 +8,8 @@ import { debtCount } from "../redux/userSlice";
 import Loading from "../components/Loading";
 import { toast } from "react-toastify";
 import { formatPercentage, formatPrice } from "../components/Function";
+import {Debt} from "../types/interfaces"
 
-
-interface Debt {
-  id: number;
-  debtName: string;
-  lenderName: string;
-  debtAmount: number;
-  interestRate: number;
-  paymentStart: string;
-  installment: number;
-  description: string;
-  paymentPlan: PaymentPlan[];
-}
-
-interface PaymentPlan {
-  paymentDate: string;
-  paymentAmount: number;
-}
 
 const Debts: React.FC = () => {
   const { user} = useSelector(

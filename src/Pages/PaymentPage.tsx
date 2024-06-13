@@ -7,16 +7,8 @@ import PaymentPageDetail from "./PaymentPageDetails";
 import Loading from "../components/Loading";
 import { Table } from "flowbite-react";
 import { formatPrice } from "../components/Function";
-interface PaymentData {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  isPaid: boolean;
-  paymentDate: string;
-  paymentAmount: number;
-  debtId: string;
-  userId: string;
-}
+import {PaymentData} from "../types/interfaces"
+
 const PaymentPage = () => {
   const { id } = useParams();
   const { user, debtStatus } = useSelector((state: RootState) => state.user);
@@ -31,7 +23,7 @@ const PaymentPage = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.data}`,
+            Authorization: `Bearer ${user?.data}`,
           },
         }
       );
