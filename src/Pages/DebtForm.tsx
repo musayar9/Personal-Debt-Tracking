@@ -5,16 +5,14 @@ import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { addMonths, format, isValid, parseISO, isToday } from "date-fns";
 import ErrorMessage from "../components/ErrorMessage";
-import { FormValues } from "../types/interfaces"
+import { FormValues } from "../types/interfaces";
 import { Helmet } from "react-helmet";
 
 const DebtForm: React.FC = () => {
-  const {  user, debtStatus } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { user, debtStatus } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-   const [errMessage, setErrMessage] = useState<string>("");
+  const [errMessage, setErrMessage] = useState<string>("");
   const [formValues, setFormValues] = useState<FormValues>({
     debtName: "",
     lenderName: "",
@@ -68,8 +66,6 @@ const DebtForm: React.FC = () => {
     formValues.paymentStart,
   ]);
 
-
-
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -85,29 +81,25 @@ const DebtForm: React.FC = () => {
     });
   };
 
-
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-        if (
-          formValues.debtName == "" ||
-          formValues.lenderName == "" ||
-          formValues.amount == 0 ||
-          formValues.debtAmount == 0 ||
-          formValues.installment == 0 ||
-          formValues.interestRate == 0 ||
-          formValues.paymentStart == ""
-        ) {
-          setErrMessage("Please fill in all fields");
-          return;
-        }
+    if (
+      formValues.debtName == "" ||
+      formValues.lenderName == "" ||
+      formValues.amount == 0 ||
+      formValues.debtAmount == 0 ||
+      formValues.installment == 0 ||
+      formValues.interestRate == 0 ||
+      formValues.paymentStart == ""
+    ) {
+      setErrMessage("Please fill in all fields");
+      return;
+    }
 
     await dispatch(createDebt({ formData: formValues, token: user?.data }));
 
-      navigate("/dashboard?tab=debt");
-    
+    navigate("/dashboard?tab=debt");
   };
-
 
   return (
     <>
@@ -116,7 +108,7 @@ const DebtForm: React.FC = () => {
         <meta name="description" content="Created Debt" />
       </Helmet>
 
-      <div className="mx-auto max-w-2xl p-2 my-8">
+      <div className=" max-w-6xl  md:mx-auto p-2 my-8">
         <div className="border-b border-base-300 pb-5 py-4">
           <h2 className="text-3xl font-medium tracking-wider capitalize text-slate-500">
             Create Debt
@@ -128,7 +120,7 @@ const DebtForm: React.FC = () => {
               <input
                 type="text"
                 id="debtName"
-                className="block px-2.5 pb-2.5 pt-4 w-full md:w-80 text-sm 
+                className="flex px-2.5 pb-2.5 pt-4 w-full md:w-80 text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
   dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
                 placeholder="Debt Name "
@@ -219,8 +211,8 @@ const DebtForm: React.FC = () => {
   dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
                 placeholder="amount "
                 name="amount"
-              readOnly
-             
+                value={formValues.amount}
+                readOnly
               />
               <label
                 htmlFor="amount"

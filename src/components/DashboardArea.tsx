@@ -90,9 +90,9 @@ const DashboardArea:React.FC = () => {
             <ReturnButton />
           </div>
         ) : (
-          <div className="mx-auto max-w-4xl my-8">
-            <div className="flex flex-col items-center justify-center gap-2">
-              <p className="font-semibold text-2xl text-slate-500">
+          <div className="mx-auto max-w-4xl my-12 ">
+            <div className="flex flex-col items-center justify-center  gap-8">
+              <p className="font-semibold text-3xl capitalize text-slate-500">
                 {" "}
                 You have no debt yet
               </p>
@@ -100,7 +100,7 @@ const DashboardArea:React.FC = () => {
                 to="/dashboard?tab=debt/new_debt"
                 className="px-4 py-2 bg-emerald-400 shadow-md capitalize text-white rounded-md"
               >
-                new debt
+                create debt
               </Link>
             </div>
           </div>

@@ -166,7 +166,7 @@ const Register: React.FC = () => {
             to="/login"
             className="text-blue-600 underline hover:text-blue-700"
           >
-            Login
+           {loading ? "Register...": "Register"} Login
           </Link>
         </div>
 

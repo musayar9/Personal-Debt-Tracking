@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {UserState} from "../types/interfaces"
+import {UserState, FormValues} from "../types/interfaces"
 
 
 
@@ -68,18 +68,6 @@ export const getDebtId = createAsyncThunk(
   }
 );
 
-// interface UserState {
-//   user: object | null;
-//   error: string ;
-//   userStatus: string;
-//   debtStatus: string;
-//   debt: object | null;
-//   debtData: object | null;
-//   debtDataLength: string;
-//   debtIdData: object | null;
-//   loading:boolean
-
-// }
 
 const initialState: UserState = {
   user: null,
