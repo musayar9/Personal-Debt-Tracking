@@ -93,117 +93,115 @@ const Debts: React.FC = () => {
       console.log(error);
     }
   };
-console.log("debtData", debtData)
-  return (
-    <>
-      {loading ? (
-        <div className="max-w-2xl mx-auto">
+if(loading){
+return      <div className="max-w-2xl mx-auto">
           <Loading />
         </div>
-      ) : (
+}
+  return (
+    <>
+      {debtData?.data?.length > 0 ? (
         <div className="mx-auto max-w-6xl my-8">
-          <h2 className="text-3xl font-bold text-slate-500 text-center">
-            Personal Debt Tracking
-          </h2>
-          <div className=" flex items-center justify-between mt-4 mb-2 p-4">
-            <p className="text-lg text-slate-400 font-bold">
-              Total Debt :{" "}
-              <span className="px-4 py-2 rounded-md text-white bg-emerald-400 text-md">
-                {debtData?.data?.length}
-              </span>
-            </p>
-            <Link
-              to="/dashboard?tab=debt/new_debt"
-              className="px-4 py-2 bg-emerald-400 shadow-md capitalize text-white rounded-md"
-            >
-              new debt
-            </Link>
+          <div>
+            <h2 className="text-3xl font-bold text-slate-500 text-center">
+              Personal Debt Tracking
+            </h2>
+            <div className=" flex items-center justify-between mt-4 mb-2 p-4">
+              <p className="text-lg text-slate-400 font-bold">
+                Total Debt :{" "}
+                <span className="px-4 py-2 rounded-md text-white bg-emerald-400 text-md">
+                  {debtData?.data?.length}
+                </span>
+              </p>
+              <Link
+                to="/dashboard?tab=debt/new_debt"
+                className="px-4 py-2 bg-emerald-400 shadow-md capitalize text-white rounded-md"
+              >
+                new debt
+              </Link>
+            </div>
           </div>
 
           <div
             className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar 
     scrollbar-track-slate-100 scroll-bar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500"
           >
-            {debtData?.data?.length > 0 ? (
-              <>
-                <Table hoverable className="shadow-md">
-                  <Table.Head>
-                    <Table.HeadCell>Debt Name</Table.HeadCell>
-                    <Table.HeadCell>Lender Name</Table.HeadCell>
-                    <Table.HeadCell>Debt Amount</Table.HeadCell>
-                    <Table.HeadCell>İnterest Rate</Table.HeadCell>
-                    <Table.HeadCell>Amount</Table.HeadCell>
-                    <Table.HeadCell>Installment</Table.HeadCell>
-                    <Table.HeadCell>Payment Start</Table.HeadCell>
-                    <Table.HeadCell>Delete</Table.HeadCell>
+            <>
+              <Table hoverable className="shadow-md">
+                <Table.Head>
+                  <Table.HeadCell>Debt Name</Table.HeadCell>
+                  <Table.HeadCell>Lender Name</Table.HeadCell>
+                  <Table.HeadCell>Debt Amount</Table.HeadCell>
+                  <Table.HeadCell>İnterest Rate</Table.HeadCell>
+                  <Table.HeadCell>Amount</Table.HeadCell>
+                  <Table.HeadCell>Installment</Table.HeadCell>
+                  <Table.HeadCell>Payment Start</Table.HeadCell>
+                  <Table.HeadCell>Delete</Table.HeadCell>
 
-                    <Table.HeadCell>
-                      <span>Edit</span>
-                    </Table.HeadCell>
-                    <Table.HeadCell>
-                      <span>Payment Plan</span>
-                    </Table.HeadCell>
-                  </Table.Head>
+                  <Table.HeadCell>
+                    <span>Edit</span>
+                  </Table.HeadCell>
+                  <Table.HeadCell>
+                    <span>Payment Plan</span>
+                  </Table.HeadCell>
+                </Table.Head>
 
-                  {debtData?.data.map((item) => (
-                    <Table.Body key={item.id} className="divide-y">
-                      <Table.Row className="bg-white dark:border-gray-700  dark:bg-gray-800">
-                        <Table.Cell className="capitalize">
-                          {item.debtName}
-                        </Table.Cell>
+                {debtData?.data.map((item) => (
+                  <Table.Body key={item.id} className="divide-y">
+                    <Table.Row className="bg-white dark:border-gray-700  dark:bg-gray-800">
+                      <Table.Cell className="capitalize">
+                        {item.debtName}
+                      </Table.Cell>
 
-                        <Table.Cell className="capitalize">
-                          {item.lenderName}
-                        </Table.Cell>
+                      <Table.Cell className="capitalize">
+                        {item.lenderName}
+                      </Table.Cell>
 
-                        <Table.Cell>{formatPrice(item.debtAmount)}</Table.Cell>
-                        <Table.Cell>
-                          {formatPercentage(item.interestRate)}
-                        </Table.Cell>
-                        <Table.Cell>{formatPrice(item.amount)}</Table.Cell>
-                        <Table.Cell>{item.installment}</Table.Cell>
-                        <Table.Cell>
-                          {" "}
-                          {new Date(item.paymentStart).toLocaleDateString()}
-                        </Table.Cell>
+                      <Table.Cell>{formatPrice(item.debtAmount)}</Table.Cell>
+                      <Table.Cell>
+                        {formatPercentage(item.interestRate)}
+                      </Table.Cell>
+                      <Table.Cell>{formatPrice(item.amount)}</Table.Cell>
+                      <Table.Cell>{item.installment}</Table.Cell>
+                      <Table.Cell>
+                        {" "}
+                        {new Date(item.paymentStart).toLocaleDateString()}
+                      </Table.Cell>
 
-                        <Table.Cell>
-                          {" "}
-                          <span
-                            onClick={() => {
-                              setShowModal(true);
-                              setPostIdToDelete(item.id);
-                            }}
-                            className="text-red-500 font-medium hover:underline cursor-pointer"
-                          >
-                            Delete
-                          </span>
-                        </Table.Cell>
+                      <Table.Cell>
+                        {" "}
+                        <span
+                          onClick={() => {
+                            setShowModal(true);
+                            setPostIdToDelete(item.id);
+                          }}
+                          className="text-red-500 font-medium hover:underline cursor-pointer"
+                        >
+                          Delete
+                        </span>
+                      </Table.Cell>
 
-                        <Table.Cell>
-                          <Link
-                            className="text-blue-500 font-medium hover:underline cursor-pointer"
-                            to={`/dashboard/edit/${item.id}`}
-                          >
-                            Edit
-                          </Link>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Link
-                            className="text-emerald-500 font-medium hover:underline cursor-pointer"
-                            to={`/dashboard/payment/${item.id}`}
-                          >
-                            Pay Debt
-                          </Link>
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table.Body>
-                  ))}
-                </Table>
-              </>
-            ) : (
-              <p>You have no debt yet</p>
-            )}
+                      <Table.Cell>
+                        <Link
+                          className="text-blue-500 font-medium hover:underline cursor-pointer"
+                          to={`/dashboard/edit/${item.id}`}
+                        >
+                          Edit
+                        </Link>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Link
+                          className="text-emerald-500 font-medium hover:underline cursor-pointer"
+                          to={`/dashboard/payment/${item.id}`}
+                        >
+                          Pay Debt
+                        </Link>
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                ))}
+              </Table>
+            </>
 
             <Modal
               show={showModal}
@@ -230,8 +228,21 @@ console.log("debtData", debtData)
                 </div>
               </Modal.Body>
             </Modal>
-
-            
+          </div>
+        </div>
+      ) : (
+        <div className="mx-auto max-w-4xl my-8">
+          <div className="flex flex-col items-center justify-center gap-2">
+            <p className="font-semibold text-2xl text-slate-500">
+              {" "}
+              You have no debt yet
+            </p>
+            <Link
+              to="/dashboard?tab=debt/new_debt"
+              className="px-4 py-2 bg-emerald-400 shadow-md capitalize text-white rounded-md"
+            >
+              new debt
+            </Link>
           </div>
         </div>
       )}

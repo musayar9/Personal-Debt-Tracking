@@ -33,7 +33,7 @@ const Navbar = () => {
           </NavLink>
         
 
-          {user && userStatus === "success" && (
+          {user && user.status === "success" && (
             <NavLink
               to="/dashboard?tab=dash"
               className={({ isActive }) => {
@@ -46,7 +46,7 @@ const Navbar = () => {
         </div>
         <div className=" ">
           <>
-            {user && userStatus === "success" ? (
+            {user && user.status === "success" ? (
               <button
                 onClick={() => handleSignOut()}
                 className="bg-emerald-500 text-sm md:text-md px-2 md:px-4 py-1 text-white rounded-sm hover:scale-110 duration-150 ease-linear hover:bg-emerald-600 "

@@ -3,7 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import loginSvg from "../assets/login.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { login } from "../redux/userSlice";
+import {
+
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/userSlice";
 import ErrorMessage from "../components/ErrorMessage";
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -12,11 +17,11 @@ const Login: React.FC = () => {
       password: "",
     }
   );
-  const { user, error, userStatus } = useSelector(
+  const { loading, error, } = useSelector(
     (state: RootState) => state.user
   );
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errMessage, setErrMessage] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -28,26 +33,40 @@ const Login: React.FC = () => {
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    await dispatch(login(formData));
 
-    navigate("/dashboard?tab=debt");
+    if (!formData.email || !formData.password) {
+      return dispatch(signInFailure("Please fill out all fields"));
+    }
 
-    if (user?.status === "error") {
-      setErrMessage(user.data);
-      return;
+    try {
+      dispatch(signInStart());
+      const res = await fetch("https://study.logiper.com/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.status === "error") {
+        console.log("data.message", data.data);
+        setIsError(true);
+        dispatch(signInFailure(data.data));
+      }
+
+      if (data.status === "success") {
+        dispatch(signInSuccess(data));
+        navigate("/dashboard?tab=debt");
+      }
+    } catch (error) {
+      dispatch(signInFailure(error));
     }
   };
-
   useEffect(() => {
-    if (errMessage) {
+    if (isError) {
       setTimeout(() => {
-        setErrMessage("");
+        setIsError(false);
       }, 3000);
     }
-  }, [errMessage]);
-  console.log("console.", error);
-  console.log("console.", userStatus);
-  console.log("user", user);
+  }, [isError]);
   return (
     <div className="mx-auto max-w-md p-2 my-8 ">
       <div className="flex items-center justify-center flex-col">
@@ -114,7 +133,7 @@ const Login: React.FC = () => {
           type="submit"
           className="bg-emerald-600 text-white p-2 hover:translate-y-1 rounded-md shadow-md"
         >
-          {userStatus === "loading" ? "Loading" : "Login"}
+          {loading ? "Loading" : "Login"}
         </button>
       </form>
 
@@ -127,7 +146,7 @@ const Login: React.FC = () => {
         </p>
       </div>
 
-      {errMessage && <ErrorMessage message={errMessage} />}
+      {error && isError && <ErrorMessage message={error} />}
     </div>
   );
 };

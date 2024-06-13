@@ -94,9 +94,9 @@ const DebtForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     await dispatch(createDebt({ formData: formValues, token: user?.data }));
-    if (debt && debtStatus === "success") {
+
       navigate("/dashboard?tab=debt");
-    }
+    
   };
 
 

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+
 export const login = createAsyncThunk("login", async (formData) => {
   try {
     const res = await fetch("https://study.logiper.com/auth/login", {
@@ -48,7 +49,7 @@ export const fetchDebt = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res, "getDebtData");
+  
       const data = await res.json();
       return data;
     } catch (error) {
@@ -82,25 +83,27 @@ export const getDebtId = createAsyncThunk(
 
 interface UserState {
   user: object | null;
-  error: string | null;
+  error: string ;
   userStatus: string;
   debtStatus: string;
   debt: object | null;
   debtData: object | null;
   debtDataLength: string;
   debtIdData: object | null;
+  loading:boolean
 
 }
 
 const initialState: UserState = {
   user: null,
-  error: null,
+  error: "",
   userStatus: "idle",
   debtStatus: "idle",
   debt: null,
   debtDataLength: "",
   debtData: null,
   debtIdData: null,
+  loading:false
 
 };
 
@@ -113,6 +116,21 @@ const userSlice = createSlice({
     },
     debtCount: (state, action) => {
       state.debtDataLength = action.payload;
+    },
+
+    signInStart: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+
+    signInSuccess: (state, action) => {
+      state.loading = true;
+      state.user = action.payload;
+      state.error = null;
+    },
+    signInFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -153,7 +171,7 @@ const userSlice = createSlice({
 
     builder.addCase(fetchDebt.rejected, (state, action) => {
       state.debtStatus = "failed";
-      state.error = action.error.message;
+      state.error = action.payload;
     });
     // getIdData
 
@@ -173,5 +191,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { signOut, debtCount } = userSlice.actions;
+export const { signOut, debtCount, signInStart, signInFailure, signInSuccess } =
+  userSlice.actions;
 export default userSlice.reducer;

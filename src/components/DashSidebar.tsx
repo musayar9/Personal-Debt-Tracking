@@ -24,37 +24,38 @@ const DashSidebar = () => {
     }
   }, [location.search]);
   return (
-    <Sidebar className="w-full md:w-56">
-      <Sidebar.Items>
-        <Sidebar.ItemGroup className="flex flex-col gap-1">
-          {
-            <Link to="/dashboard?tab=dash">
-              <Sidebar.Item
-                active={tab === "dash" || !tab}
-                icon={MdOutlineSpaceDashboard}
-                as="div"
-              >
-                Dashboard
-              </Sidebar.Item>
-            </Link>
-          }
+    <>
+      {user && user?.status === "success" && (
+        <Sidebar className="w-full md:w-56">
+          <Sidebar.Items>
+            <Sidebar.ItemGroup className="flex flex-col gap-1">
+              {
+                <Link to="/dashboard?tab=dash">
+                  <Sidebar.Item
+                    active={tab === "dash" || !tab}
+                    icon={MdOutlineSpaceDashboard}
+                    as="div"
+                  >
+                    Dashboard
+                  </Sidebar.Item>
+                </Link>
+              }
 
-         
-
-          <Link to="/dashboard?tab=debt">
-            <Sidebar.Item
-              active={tab === "debt"}
-              icon={FcDebt}
-            
-              as="div"
-              labelColor="dark"
-            >
-              Debt
-            </Sidebar.Item>
-          </Link>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
+              <Link to="/dashboard?tab=debt">
+                <Sidebar.Item
+                  active={tab === "debt"}
+                  icon={FcDebt}
+                  as="div"
+                  labelColor="dark"
+                >
+                  Debt
+                </Sidebar.Item>
+              </Link>
+            </Sidebar.ItemGroup>
+          </Sidebar.Items>
+        </Sidebar>
+      )}
+    </>
   );
 };
 
