@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {UserState, FormValues} from "../types/interfaces"
-
-
+import { UserState, FormValues } from "../types/interfaces";
 
 export const createDebt = createAsyncThunk(
   "createDebt",
@@ -17,7 +15,7 @@ export const createDebt = createAsyncThunk(
       });
 
       const data = await res.json();
-      console.log(data);
+
       return data;
     } catch (error) {
       return error;
@@ -36,7 +34,7 @@ export const fetchDebt = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       const data = await res.json();
       return data;
     } catch (error) {
@@ -68,7 +66,6 @@ export const getDebtId = createAsyncThunk(
   }
 );
 
-
 const initialState: UserState = {
   user: null,
   error: "",
@@ -78,8 +75,7 @@ const initialState: UserState = {
   debtDataLength: "",
   debtData: null,
   debtIdData: null,
-  loading:false
-
+  loading: false,
 };
 
 const userSlice = createSlice({
@@ -109,8 +105,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    
-
     // create debt
     builder.addCase(createDebt.pending, (state) => {
       state.debtStatus = "loading";

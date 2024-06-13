@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 import {PaymentData} from "../types/interfaces"
 import { Helmet } from "react-helmet";
 import PaymentTable from "./PaymentTable";
+import Error from "../components/Error";
 const PaymentPage = () => {
   const { id } = useParams();
   const { user, debtStatus, debtIdData } = useSelector(
@@ -16,11 +17,12 @@ const PaymentPage = () => {
   );
   const [paymentData, setPaymentData] = useState<PaymentData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errMessage, ] = useState<string>("")
   const fetchPayment = async (): Promise<void> => {
     try {
       setLoading(true)
       const res = await fetch(
-        `https://study.logiper.com/finance/payment-plans/${id}`,
+        `https://study.logiper.com/financsetErrMessagee/payment-plans/${id}`,
         {
           method: "GET",
           headers: {
@@ -35,7 +37,7 @@ const PaymentPage = () => {
       setPaymentData(data.data);
      setLoading(false)
     } catch (error) {
-      console.log(error);
+      setErrMessage(error)
     }
   };
 
@@ -47,7 +49,7 @@ const PaymentPage = () => {
   const handleChange = async (id: string): Promise<void> => {
     const paymentIndex = paymentData.findIndex((item) => item.id === id);
     if (paymentIndex === -1) return;
-    console.log("paymentInde", paymentIndex);
+
     const paymentValue = paymentData[paymentIndex];
     const updatedPayment = {
       ...paymentValue,
@@ -78,13 +80,14 @@ const PaymentPage = () => {
       const newPaymentData = [...paymentData];
       newPaymentData[paymentIndex] = updatedPayment;
       setPaymentData(newPaymentData);
+      return data
     } catch (err) {
-      console.log(err);
+      setErrMessage(err)
     }
   };
   
   if (debtStatus === "loading" && loading) return <Loading />;
-
+if(errMessage) return <Error message="Something Went Wrong"/>
   return (
     <>
       <Helmet>

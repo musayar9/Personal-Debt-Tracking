@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { formatPercentage, formatPrice } from "../components/Function";
 import {Debt} from "../types/interfaces"
 import { Helmet } from "react-helmet";
+import Error from "../components/Error";
 
 const Debts: React.FC = () => {
   const { user} = useSelector(
@@ -20,6 +21,7 @@ const Debts: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [postIdToDelete, setPostIdToDelete] = useState<string>("");
+  const [errMessage, setErrMessage] = useState<string>("");
   const fetchDebt = async (): Promise<void> => {
     try {
       setLoading(true);
@@ -36,7 +38,7 @@ const Debts: React.FC = () => {
       setLoading(false);
       setDebtData(data);
     } catch (error) {
-      console.log(error);
+      setErrMessage(error)
     }
   };
 
@@ -70,7 +72,7 @@ const Debts: React.FC = () => {
      
       return data;
     } catch (error) {
-      console.log(error);
+    setErrMessage(error)
     }
   };
 if(loading){
@@ -78,6 +80,8 @@ return      <div className="max-w-2xl mx-auto">
           <Loading />
         </div>
 }
+
+if(errMessage) return <Error message="Something Went Wrong"/>
   return (
     <>
       <Helmet>

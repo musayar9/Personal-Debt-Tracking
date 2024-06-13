@@ -9,6 +9,7 @@ import { FormValues } from "../types/interfaces";
 import ReturnDebt from "../components/ReturnDebt";
 import ErrorMessage from "../components/ErrorMessage";
 import { Helmet } from "react-helmet";
+import Error from "../components/Error";
 
 const EditDebt: React.FC = () => {
   const { user, debtIdData } = useSelector((state: RootState) => state.user);
@@ -17,7 +18,7 @@ const EditDebt: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errMessage, setErrMessage] = useState<string>("");
-
+const [error, setError] = useState<string>("")
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
@@ -92,7 +93,7 @@ const EditDebt: React.FC = () => {
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    console.log(formValues);
+
 
     if (
       formValues.debtName == "" ||
@@ -118,14 +119,16 @@ const EditDebt: React.FC = () => {
         body: JSON.stringify(formValues),
       });
       const data = await res.json();
-      console.log(data);
+
       setLoading(false);
       navigate("/dashboard?tab=debt");
     } catch (error) {
-      console.log(error);
+      setError(error)
       setLoading(false);
     }
   };
+  
+  if(error) return <Error message="Something Went Wrong"/>
   return (
     <>
       <Helmet>

@@ -55,7 +55,7 @@ const Register: React.FC = () => {
         email: "",
         password: "",
       });
-      // console.log(data);
+
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);

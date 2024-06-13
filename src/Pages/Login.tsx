@@ -48,7 +48,7 @@ const Login: React.FC = () => {
       });
       const data = await res.json();
       if (data.status === "error") {
-        console.log("data.message", data.data);
+   
         setIsError(true);
         dispatch(signInFailure(data.data));
       }
