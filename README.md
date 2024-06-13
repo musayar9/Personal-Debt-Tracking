@@ -8,7 +8,6 @@
 ![autoprefixer](https://img.shields.io/badge/autoprefixer-10.4.17-yellow)
 ![flowbite-react](https://img.shields.io/badge/flowbite--react-0.9.0-orange)
 ![postcss](https://img.shields.io/badge/postcss-8.4.38-purple)
-
 ![react-dom](https://img.shields.io/badge/react--dom-18.2.0-lightgrey)
 ![react-helmet](https://img.shields.io/badge/react--helmet-2.0.5-darkblue)
 ![react-icons](https://img.shields.io/badge/react--icons-5.2.1-darkgreen)
@@ -65,11 +64,12 @@ yarn
 Bağımlılıkları indirdikten sonra, projeyi çalıştırmak için aşağıdaki komutları kullanabilirsiniz.
 
 ```
- npm start
+ npm run dev
 ```
 
 or
 
 ```
-yarn start
+yarn run dev
 ```
+
