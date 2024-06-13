@@ -20,10 +20,9 @@
 
 ### Proje Ön Tanıtım
 
-Bu proje javascriptini framework'u olan `ReactJs` ile geliştirilmiştir. Proje durum yönetimi için (state management)`react-redux ve redux-toolkit`kullanılmıştır. Elde edilen verilerin localStorage tutulması işlemleri i.in `redux-persist` kütüphanesi kullanılmıştır. Bu proje için oluşturulan verilerin tip kontrolü ise `Typescript` ile sağlanmıştır. Uygulama içinde routing işlemleri içinde `react-router-dom` kütüphanesi kullanılmıştır.
+Bu proje, JavaScript'in güçlü framework'ü olan ``ReactJs`` ile geliştirilmiştir. Proje, durum yönetimi için ``react-redux ve redux-toolkit ``kullanmaktadır. Elde edilen verilerin localStorage'da saklanması işlemleri ``redux-persist`` kütüphanesi ile sağlanmıştır. Oluşturulan verilerin tip kontrolü ise ``TypeScript`` ile yapılmıştır. Uygulama içinde yönlendirme (routing) işlemleri için ``react-router-dom`` kütüphanesi kullanılmaktadır.
 
-Bu proje UI tasarımı için `tailwindcss`,`flowbite` ve `flowbite-react` kütüphaneleri kullanılmıştır.
-
+UI tasarımı için ise ``tailwindcss``, ``flowbite`` ve ``flowbite-react`` kütüphaneleri kullanılmıştır. Bu kütüphaneler, modern ve kullanıcı dostu bir arayüz oluşturmak için tercih edilmiştir.
 ### Proje İçeriği
 
 Bu uygulama, kullanıcıların kendi kişisel borçlarını zahmetsizce yönetmelerini sağlar. İşte uygulamanın sunduğu harika özellikler:
@@ -61,7 +60,7 @@ yarn
 ```
 
 3. Projeyi Ayağa Kaldırma
-Bağımlılıkları indirdikten sonra, projeyi çalıştırmak için aşağıdaki komutları kullanabilirsiniz.
+   Bağımlılıkları indirdikten sonra, projeyi çalıştırmak için aşağıdaki komutları kullanabilirsiniz.
 
 ```
  npm run dev
@@ -76,17 +75,16 @@ yarn run dev
 ## Proje Sayfaları
 
 ### Kullanıcı Kayıt Sayfası
- 
+
 Bu sayfada kullanıcı uygulamaya kayıt oluyor kayıt işlemi gerçekleştikten sonra kullanıcı giriş sayfasına yönlendirilecek.
 
 ![img-1](public/images/1.jpg)
 
 ### Kullanıcı Giriş Sayfası
- 
+
 Bu sayfada uygulamaya kayıt olan kullanıcı artık uygulamaya email ve password bilgisiyle giriş yapabilecek. Sisteme giriş yapan kullanıcı dashboard sayfasına yönlendirilecek.
 
 ![img-2](public/images/2.jpg)
-
 
 ### Dashboard Sayfası
 
@@ -94,14 +92,15 @@ Uygulamaya ilk defa giriş yapan kullanıcın hiç bir borç kaydı bulunmadığ
 
 ![img-3](public/images/3.jpg)
 
-### Borç (Create Debt) Oluşturma Sayfası 
- Bu sayfada kullanıcı  kendine özgü borçları oluşturabilir ve istediği aya kadar taksitlendirebilir.
+### Borç (Create Debt) Oluşturma Sayfası
+
+Bu sayfada kullanıcı kendine özgü borçları oluşturabilir ve istediği aya kadar taksitlendirebilir.
 
 ![img-4](public/images/4.jpg)
 
 ### Borçların Dashboard Sayfasında Gösterilmesi
 
-Bu sayfada kullanıcı toplam  borç sayını görüntüleyebilir. Güncel olan borçlarını görebilir.
+Bu sayfada kullanıcı toplam borç sayını görüntüleyebilir. Güncel olan borçlarını görebilir.
 
 ![img-5](public/images/5.jpg)
 
@@ -110,19 +109,34 @@ Bu sayfada kullanıcı toplam  borç sayını görüntüleyebilir. Güncel olan 
 Bu sayfada kullanıcı oluşturmuş olduğu tüm borçları tabloda görüntüleyebilir. Bu tabloda borca ait detaylı bilgiler bulunmaktadır.
 Kullanıcı bu istediğini borcunu silebilir, düzenleyebilir ve borcunun ödeme işlemlerini yapabilir.
 
-
 ![img-7](public/images/7.jpg)
 
-   #### Borç Düzenleme
-   
-   Kullanıcı tabloda ``edit`` butonuna tıkladığında iligili borc için borç düzenleme sayfasına yönlendirilecek.
-   
-   ![img-8](public/images/8.jpg)
-   
-   #### Borç Ödeme
-   
-   Kullanıcı tabloda `pay debt` butonuna tıkladığında ilgili borca ait olan borç bilgilerinin ve ödeme planını bulunduğu sayfaya yönlendirilecek. Kullanıcı bu sayfada ilgili borca ait olan taksit ödemlerini bu sayfadan yapabilir.
-   
-   ![img-9](public/images/9.jpg)
+#### Borç Düzenleme
 
+Kullanıcı tabloda `edit` butonuna tıkladığında iligili borc için borç düzenleme sayfasına yönlendirilecek.
 
+![img-8](public/images/8.jpg)
+
+#### Borç Ödeme
+
+Kullanıcı tabloda `pay debt` butonuna tıkladığında ilgili borca ait olan borç bilgilerinin ve ödeme planını bulunduğu sayfaya yönlendirilecek. Kullanıcı bu sayfada ilgili borca ait olan taksit ödemlerini bu sayfadan yapabilir.
+
+![img-9](public/images/9.jpg)
+
+#### Borç Silme
+
+Kullanıcı tabloda `delete` butonuna tıkladığında ilgili borcu tablodan silebilecektir.
+
+![img-10](public/images/10.jpg)
+
+### AnaSayfa
+
+Kullanıcı navbar üzerinde yer alan `Home` linkine tıkladığında anasayfaya yönlendirilecektir.
+
+![img-11](public/images/11.jpg)
+
+### Oturumu Sonlandırma
+
+Kullanıcı navbar üzerinde bulundan ve dashboard alanında bulunan `SignOut` butonlarından herhangi birine tıkladığında uygulamadan çıkış yapmış olacaktır.
+
+![img-12](public/images/12.jpg)
