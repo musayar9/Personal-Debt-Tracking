@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom"
 import { FiArrowLeft} from "react-icons/fi";
 const ReturnDebt= () => {
-  /*go back to top of list */
+
 
   return (
     <Link to="/dashboard?tab=debt"

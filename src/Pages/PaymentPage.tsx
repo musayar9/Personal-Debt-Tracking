@@ -49,7 +49,6 @@ const PaymentPage = () => {
     fetchPayment();
   }, []);
 
-  console.log(paymentData, "paymentData");
 
   const handleChange = async (id: string): Promise<void> => {
     const paymentIndex = paymentData.findIndex((item) => item.id === id);
@@ -74,14 +73,14 @@ const PaymentPage = () => {
           method: "PUT",
           headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${user.data}`,
+            Authorization: `Bearer ${user?.data}`,
           },
           body: JSON.stringify(formData),
         }
       );
 
       const data = await res.json();
-      console.log(data);
+
       const newPaymentData = [...paymentData];
       newPaymentData[paymentIndex] = updatedPayment;
       setPaymentData(newPaymentData);

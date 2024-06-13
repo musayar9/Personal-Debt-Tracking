@@ -28,14 +28,12 @@ interface PaymentPlan {
 }
 
 const Debts: React.FC = () => {
-  const { user, debt, debtDataLength } = useSelector(
+  const { user} = useSelector(
     (state: RootState) => state.user
   );
   const dispatch = useDispatch();
-
   const [debtData, setDebtData] = useState<Debt[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [postIdToDelete, setPostIdToDelete] = useState<string>("");
   const fetchDebt = async (): Promise<void> => {
@@ -65,7 +63,7 @@ const Debts: React.FC = () => {
   const handleDeletePost = async (): Promise<void> => {
     setShowModal(false);
     try {
-      setDeleteLoading(true);
+  
       const res = await fetch(
         `https://study.logiper.com/finance/debt/${postIdToDelete}`,
         {
@@ -82,12 +80,10 @@ const Debts: React.FC = () => {
         data: prev.data.filter((item) => item.id !== postIdToDelete),
       }));
 
-      //
-      // fetchDebt();
-      toast.warning(`${data.data.debtName} Silindi`);
+      
+      toast.warning(`${data?.data.debtName} Silindi`);
 
-      // fetchDebt();
-      setDeleteLoading(false);
+     
       return data;
     } catch (error) {
       console.log(error);
@@ -232,7 +228,7 @@ return      <div className="max-w-2xl mx-auto">
         </div>
       ) : (
         <div className="mx-auto max-w-4xl my-8">
-          <div className="flex flex-col items-center justify-center gap-2">
+          <div className="flex flex-col items-center justify-center ">
             <p className="font-semibold text-2xl text-slate-500">
               {" "}
               You have no debt yet

@@ -2,9 +2,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "../redux/userSlice";
+import { RootState } from "../redux/store";
 
 const Navbar = () => {
-  const { user, userStatus } = useSelector((state: RootState) => state.user);
+  const { user,  } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSignOut = () => {

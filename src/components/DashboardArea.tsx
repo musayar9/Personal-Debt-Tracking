@@ -3,26 +3,30 @@ import { RootState } from "../redux/store";
 import { useEffect } from "react";
 import { fetchDebt } from "../redux/userSlice";
 import { FcDebt } from "react-icons/fc";
-import { HiArrowNarrowUp, HiOutlineUserGroup } from "react-icons/hi";
+import { HiArrowNarrowUp } from "react-icons/hi";
 import { MdPayments } from "react-icons/md";
 import { formatPrice } from "./Function";
 import ReturnButton from "./ReturnDebt";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import Error from "./Error";
+
 const DashboardArea = () => {
-  const { user, debtData, debtStatus } = useSelector((state: RootState) => state.user);
+  const { user, debtData, debtStatus, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchDebt({ token: user?.data }));
   }, []);
-  console.log("debtData", debtData);
-  console.log(user)
   if(debtStatus === "loading")return (
     <div className="max-w-2xl mx-auto">
       <Loading />
     </div>
   );
+  
+  if(debtStatus ==="failed" || error){
+  return <Error message={"Something went wrong!"}/>
+  }
   
   return (
     <>

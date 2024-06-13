@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { addMonths, format, isValid, parseISO } from "date-fns";
+import ErrorMessage from "../components/ErrorMessage";
 interface PaymentPlan {
   paymentDate: string;
   paymentAmount: number;
@@ -21,11 +22,12 @@ interface FormValues {
 }
 
 const DebtForm: React.FC = () => {
-  const { debt, user, debtStatus } = useSelector(
+  const {  user, debtStatus } = useSelector(
     (state: RootState) => state.user
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+   const [errMessage, setErrMessage] = useState<string>("");
   const [formValues, setFormValues] = useState<FormValues>({
     debtName: "",
     lenderName: "",
@@ -65,7 +67,14 @@ const DebtForm: React.FC = () => {
         paymentPlan: updatedPaymentPlan,
       }));
     }
+
+    if (errMessage) {
+      setTimeout(() => {
+        setErrMessage("");
+      }, 3000);
+    }
   }, [
+    errMessage,
     formValues.debtAmount,
     formValues.interestRate,
     formValues.installment,
@@ -93,6 +102,19 @@ const DebtForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+        if (
+          formValues.debtName == "" ||
+          formValues.lenderName == "" ||
+          formValues.amount == 0 ||
+          formValues.debtAmount == 0 ||
+          formValues.installment == 0 ||
+          formValues.interestRate == 0 ||
+          formValues.paymentStart == ""
+        ) {
+          setErrMessage("Please fill in all fields");
+          return;
+        }
+
     await dispatch(createDebt({ formData: formValues, token: user?.data }));
 
       navigate("/dashboard?tab=debt");
@@ -216,7 +238,6 @@ const DebtForm: React.FC = () => {
           <div className="relative ">
             <input
               type="date"
-             
               id="paymentStart"
               className="block px-2.5 pb-2.5 pt-4 w-full md:w-52  text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
@@ -292,7 +313,6 @@ const DebtForm: React.FC = () => {
               <div className="relative ">
                 <input
                   type="date"
-               
                   id="paymentDate"
                   className="block px-2.5 pb-2.5 pt-4 w-full md:w-80 text-sm 
   text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
@@ -300,7 +320,6 @@ const DebtForm: React.FC = () => {
                   placeholder="Payment Date"
                   name="paymentDate"
                   value={plan.paymentDate}
-                
                 />
                 <label
                   htmlFor="paymentDate"
@@ -339,6 +358,8 @@ const DebtForm: React.FC = () => {
           {debtStatus === "loading" ? "Creating Debt...." : "Create Debt"}
         </button>
       </form>
+
+      {errMessage && <ErrorMessage message={errMessage} />}
     </div>
   );
 };

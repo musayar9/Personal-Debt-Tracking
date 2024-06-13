@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { formatPercentage, formatPrice } from "../components/Function";
 import { addMonths, format, isValid, parseISO } from "date-fns";
-import {getDebtId} from "../redux/userSlice"
+import { getDebtId } from "../redux/userSlice";
 interface PaymentPlan {
   paymentDate: string;
   paymentAmount: number;
@@ -25,12 +25,12 @@ const EditDebt: React.FC = () => {
   const { debt, user, debtIdData } = useSelector(
     (state: RootState) => state.user
   );
-  console.log("debt", debt);
+
   const { id } = useParams();
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(id);
-  
+  const [errMessage, setErrMessage] = useState<string>("");
+
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
@@ -44,7 +44,6 @@ const dispatch = useDispatch()
     description: id ? debtIdData.data.description : "",
     paymentPlan: [{ paymentDate: "", paymentAmount: 0 }],
   });
-
 
   useEffect(() => {
     if (id) {
@@ -76,14 +75,20 @@ const dispatch = useDispatch()
         paymentPlan: updatedPaymentPlan,
       }));
     }
+
+    if (errMessage) {
+      setTimeout(() => {
+        setErrMessage("");
+      }, 3000);
+    }
   }, [
+    errMessage,
     formValues.debtAmount,
     formValues.interestRate,
     formValues.installment,
     formValues.paymentStart,
   ]);
 
-  console.log("formValue", formValues);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -101,6 +106,20 @@ const dispatch = useDispatch()
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     console.log(formValues);
+
+    if (
+      formValues.debtName == "" ||
+      formValues.lenderName == "" ||
+      formValues.amount == 0 ||
+      formValues.debtAmount == 0 ||
+      formValues.installment == 0 ||
+      formValues.interestRate == 0 ||
+      formValues.paymentStart == ""
+    ) {
+      setErrMessage("Please fill in all fields");
+      return;
+    }
+
     try {
       setLoading(true);
       const res = await fetch(`https://study.logiper.com/finance/debt/${id}`, {
@@ -430,6 +449,8 @@ const dispatch = useDispatch()
           {loading ? "Editing Debt...." : "Edit Debt"}
         </button>
       </form>
+
+      {errMessage && <ErrorMessage message={errMessage} />}
     </div>
   );
 };

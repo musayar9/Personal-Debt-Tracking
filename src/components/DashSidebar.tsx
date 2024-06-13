@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 import { FcDebt } from "react-icons/fc";
 const DashSidebar = () => {
-  const { user, debtDataLength,  } = useSelector(
+  const { user,  } = useSelector(
     (state: RootState) => state.user
   );
   const location = useLocation();
