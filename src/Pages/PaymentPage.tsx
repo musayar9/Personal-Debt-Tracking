@@ -6,7 +6,7 @@ import ReturnButton from "../components/ReturnDebt";
 import PaymentPageDetail from "./PaymentPageDetails";
 import Loading from "../components/Loading";
 
-import {PaymentData} from "../types/interfaces"
+import { PaymentData } from "../types/interfaces";
 import { Helmet } from "react-helmet";
 import PaymentTable from "./PaymentTable";
 import Error from "../components/Error";
@@ -16,14 +16,15 @@ const PaymentPage = () => {
     (state: RootState) => state.user
   );
   const [paymentData, setPaymentData] = useState<PaymentData[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  
-  const [errMessage, setErrMessage] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false); 
+  const [postError, setPostError] = useState<boolean>(false);
+  const [errMessage, setErrorMessage] = useState<boolean>(false);
+
   const fetchPayment = async (): Promise<void> => {
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await fetch(
-        `https://study.logiper.com/financsetErrMessagee/payment-plans/${id}`,
+        `https://study.logiper.com/finance/payment-plans/${id}`,
         {
           method: "GET",
           headers: {
@@ -36,16 +37,16 @@ const PaymentPage = () => {
       const data = await res.json();
 
       setPaymentData(data.data);
-     setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setErrMessage(error)
+      console.log(error);
+      setPostError(true)
     }
   };
 
   useEffect(() => {
     fetchPayment();
   }, []);
-
 
   const handleChange = async (id: string): Promise<void> => {
     const paymentIndex = paymentData.findIndex((item) => item.id === id);
@@ -81,14 +82,15 @@ const PaymentPage = () => {
       const newPaymentData = [...paymentData];
       newPaymentData[paymentIndex] = updatedPayment;
       setPaymentData(newPaymentData);
+      
       return data
     } catch (err) {
-      setErrMessage(err)
+      setErrorMessage(true)
     }
   };
-  
+
   if (debtStatus === "loading" && loading) return <Loading />;
-if(errMessage) return <Error message="Something Went Wrong"/>
+if(errMessage || postError) return <Error message="something went wrong"/>
   return (
     <>
       <Helmet>
@@ -105,8 +107,10 @@ if(errMessage) return <Error message="Something Went Wrong"/>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-12">
           <div className="lg:col-span-8">
-      
-            <PaymentTable paymentData={paymentData} handleChange={handleChange}/>
+            <PaymentTable
+              paymentData={paymentData}
+              handleChange={handleChange}
+            />
           </div>
           <div className="lg:col-span-4 lg:pl-4">
             {" "}
