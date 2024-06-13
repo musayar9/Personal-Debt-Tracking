@@ -333,7 +333,7 @@ const DebtForm: React.FC = () => {
                     placeholder="Payment Amount"
                     name="paymentAmount"
                     value={plan.paymentAmount}
-                    onChange={(e) => handlePaymentPlanChange(index, e)}
+               
                   />
                   <label
                     htmlFor="paymentAmount"
