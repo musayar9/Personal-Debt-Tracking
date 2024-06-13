@@ -76,6 +76,31 @@ yarn run dev
 ## Proje Sayfaları
 
 ### Kullanıcı Kayıt Sayfası
+ 
+Bu sayfada kullanıcı uygulamaya kayıt oluyor kayıt işlemi gerçekleştikten sonra kullanıcı giriş sayfasına yönlendirilecek.
 
 ![img-1](public/images/1.jpg)
 
+### Kullanıcı Giriş Sayfası
+ 
+Bu sayfada uygulamaya kayıt olan kullanıcı artık uygulamaya email ve password bilgisiyle giriş yapabilecek. Sisteme giriş yapan kullanıcı dashboard sayfasına yönlendirilecek.
+
+![img-2](public/images/2.jpg)
+
+
+### Dashboard Sayfası
+
+Uygulamaya ilk defa giriş yapan kullanıcın hiç bir borç kaydı bulunmadığı için `henüz borucunuz bulunmamaktadır` yazısı gözükecek. Aşağıda bulunan `create debt` butonun tıkldığında kullanıcı borç oluşturma sayfasına yönlendirilecek.
+
+![img-3](public/images/3.jpg)
+
+### Borç (Create Debt) Oluşturma Sayfası 
+ Bu sayfada kullanıcı  kendine özgü borçları oluşturabilir ve istediği aya kadar taksitlendirebilir.
+
+![img-4](public/images/4.jpg)
+
+### Borçların Dashboard Sayfasında Gösterilmesi
+
+Bu sayfada kullanıcı toplam  borç sayını görüntüleyebilir. Güncel olan borçlarını görebilir.
+
+![img-5](public/images/5.jpg)
