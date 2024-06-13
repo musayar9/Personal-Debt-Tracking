@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { createDebt } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-import { addMonths, format, isValid, parseISO } from "date-fns";
+import { addMonths, format, isValid, parseISO, isToday } from "date-fns";
 import ErrorMessage from "../components/ErrorMessage";
 import { FormValues } from "../types/interfaces"
 
@@ -233,6 +233,7 @@ const DebtForm: React.FC = () => {
               name="paymentStart"
               value={formValues.paymentStart}
               onChange={handleChange}
+              min={isToday(new Date()) ? format(new Date(), "yyyy-MM-dd") : ""}
               required
             />
             <label
@@ -307,6 +308,10 @@ const DebtForm: React.FC = () => {
                   placeholder="Payment Date"
                   name="paymentDate"
                   value={plan.paymentDate}
+               
+                  min={
+                    isToday(new Date()) ? format(new Date(), "yyyy-MM-dd") : ""
+                  }
                 />
                 <label
                   htmlFor="paymentDate"
