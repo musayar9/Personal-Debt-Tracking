@@ -95,12 +95,12 @@ const userSlice = createSlice({
     },
 
     signInStart: (state) => {
-      state.loading = false;
+      state.loading = true;
       state.error = null;
     },
 
     signInSuccess: (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.user = action.payload;
       state.error = null;
     },
